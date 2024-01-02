@@ -33,6 +33,7 @@ int main() {
 				plik.open("src/Konta.txt", ios::in);
 				
 				while (!zalogowano) {
+					system("cls");
 					cout << "login: ";
 					cin >> login;
 					cout << "haslo: ";
