@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GymApp", "GymApp.vcxproj", "{44495A10-7A3F-499D-B079-280113CD738F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GymAppTests", "..\GymAppTests\GymAppTests.vcxproj", "{44A0C464-052C-450C-8E79-D2EBAD854A7D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GymAppTests", "GymAppTests\GymAppTests.vcxproj", "{44A0C464-052C-450C-8E79-D2EBAD854A7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
