@@ -1,6 +1,5 @@
 #include <iostream>
 #include "KontoUzytkownika.h"
-#include "Konto.cpp"
 
 using namespace std;
 
@@ -11,6 +10,7 @@ KontoUzytkownika::KontoUzytkownika()
 KontoUzytkownika::~KontoUzytkownika()
 {
 }
+
 void KontoUzytkownika::rezerwacjaZajec()
 {
 }
@@ -38,5 +38,4 @@ void KontoUzytkownika::wyswietlKarnet()
 void KontoUzytkownika::zarzadzajKontemAdmin(string loginDoZmiany, string hasloDoZmiany)
 {
 }
-
 

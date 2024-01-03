@@ -1,8 +1,9 @@
+#pragma once
 #include <iostream>
 
 using namespace std;
 
-class Konto
+class Konto 
 {
     string login;
     string haslo;
