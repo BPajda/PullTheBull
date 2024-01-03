@@ -4,6 +4,7 @@
 using namespace std;
 class KontoUzytkownika:Konto
 {
+public:
     void rezerwacjaZajec();
     void usuniecieRezerwacji();
     void przegladajZajecia();
