@@ -1,12 +1,12 @@
 #pragma once
 #include <iostream>
-#include "Zajecia.h"
+//#include "Zajecia.h"
 
 using namespace std;
 
 class HarmonogramZajec
 {
-	Zajecia zajecia[];
+	//Zajecia zajecia[];
 public:
 	void dodajZajecia(string nazwa, int dataZajec);
 	void usunZajecia(string nazwa, int dataZajec);
