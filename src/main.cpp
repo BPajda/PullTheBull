@@ -60,7 +60,7 @@ int main() {
 				cout << endl;
 				//
 				while (plik >> daneLogin >> daneHaslo && !zalogowano) {
-					//getline(plik, wiersz);											// pominiecie reszty danych w bie¿¹cej linijce
+					//getline(plik, wiersz);										// pominiecie reszty danych w bie¿¹cej linijce
 					for (int i = 0; i < 5; i++) {
 						plik >> wiersz;
 					}
@@ -70,7 +70,7 @@ int main() {
 					}
 				}
 
-				plik.clear();															// powrót wskaŸnika kursora w pliku na jego pocz¹tek
+				plik.clear();														// powrót wskaŸnika kursora w pliku na jego pocz¹tek
 				plik.seekg(0, ios_base::beg);
 
 				if (!zalogowano) {
@@ -87,11 +87,12 @@ int main() {
 				case '0':
 					cout << "==== Zalogowano jako " << login << " ====" << endl;
 					cout << " 1) Wyswietl Karnet" << endl;
-					cout << " 2) Przegladaj Cennik" << endl;
-					cout << " 3) Moje Zajecia" << endl;
-					cout << " 4) Przegladaj Zajecia" << endl;
-					cout << " 5) Rezerwacja Zajec" << endl;
-					cout << " 6) Usun Konto" << endl;
+					cout << " 2) Weryfikacja Karnetu" << endl;
+					cout << " 3) Przegladaj Cennik" << endl;
+					cout << " 4) Moje Zajecia" << endl;
+					cout << " 5) Przegladaj Zajecia" << endl;
+					cout << " 6) Rezerwacja Zajec" << endl;
+					cout << " 7) Usun Konto" << endl;
 					cout << "ESC) Powrot" << endl;
 					wybor = _getch();
 					switch (wybor) {
@@ -106,6 +107,8 @@ int main() {
 					case '5':
 						break;
 					case '6':
+						break;
+					case '7':
 						break;
 					case 27:
 						goto menu;
