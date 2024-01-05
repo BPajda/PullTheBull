@@ -1,4 +1,4 @@
-lwrobel	123	123	123123	123123	123213	0	0
+lwrobel	123	123	123123	123123	123213	0	1
 bpajda	123	asdasd	asdasd	asdasd	asdasd	0	0
 jzboro	123	awdasdwasdwasd	awdasdwasdwa	wdadwadawdadawda	dwadadawdawdwadawda	0	0
 lalala	123	asdasda	asdasdsa	dasdasdsa	dasdasd	0	0
