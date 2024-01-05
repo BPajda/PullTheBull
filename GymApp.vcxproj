@@ -132,6 +132,7 @@
     <ClCompile Include="src\Konto.cpp" />
     <ClCompile Include="src\KontoUzytkownika.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\TypKarnetu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Konto.h" />

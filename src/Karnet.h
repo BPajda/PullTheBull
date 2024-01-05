@@ -1,13 +1,13 @@
 #pragma once
 #include <iostream>
-//#include "TypKarnetu.h"
+#include "TypKarnetu.h"
 
 using namespace std;
 
 class Karnet
 {
 	int ostatniaPlatnosc;
-	//TypKarnetu * typkarnetu;
+	TypKarnetu * typkarnetu;
 public:
 	bool sprawdzWaznosc();
 	void oplacKarnet();
