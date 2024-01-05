@@ -27,6 +27,9 @@
     <ClCompile Include="src\Karnet.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="src\HarmonogramZajec.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\KontoUzytkownika.h">
