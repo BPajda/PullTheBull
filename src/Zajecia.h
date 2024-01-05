@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include "Pracownik.h"
 #include "Klient.h"
@@ -7,7 +8,7 @@ using namespace std;
 class Zajecia
 {
 	Pracownik prowadzacy;
-	Klient uczestnicy[];
+	//Klient uczestnicy[];
 
 	string nazwa;
 	string opis;

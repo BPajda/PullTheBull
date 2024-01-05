@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include "Karnet.h"
 #include "KontoUzytkownika.h"
