@@ -1,6 +1,7 @@
+#pragma once
 #include <iostream>
 
-using namepspace std;
+using namespace std;
 
 class KontoPracownika
 {

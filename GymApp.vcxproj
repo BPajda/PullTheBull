@@ -129,10 +129,15 @@
   <ItemGroup>
     <ClCompile Include="src\HarmonogramZajec.cpp" />
     <ClCompile Include="src\Karnet.cpp" />
+    <ClCompile Include="src\Klient.cpp" />
     <ClCompile Include="src\Konto.cpp" />
+    <ClCompile Include="src\KontoPracownika.cpp" />
     <ClCompile Include="src\KontoUzytkownika.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Osoba.cpp" />
+    <ClCompile Include="src\Pracownik.cpp" />
     <ClCompile Include="src\TypKarnetu.cpp" />
+    <ClCompile Include="src\Zajecia.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Konto.h" />
