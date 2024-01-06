@@ -5,9 +5,9 @@ using namespace std;
 
 class Osoba
 {
+protected:
 	string imie;
 	string nazwisko;
-	string adres;
 	string telefon;
 	string email;
 public:
