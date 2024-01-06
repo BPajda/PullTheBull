@@ -6,9 +6,9 @@ using namespace std;
 
 class Karnet
 {
-	int ostatniaPlatnosc;
-	TypKarnetu * typkarnetu;
 public:
+	TypKarnetu * typkarnetu;
+	time_t ostatniaPlatnosc;
 	bool sprawdzWaznosc();
 	void oplacKarnet();
 	Karnet();

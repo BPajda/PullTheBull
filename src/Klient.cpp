@@ -3,9 +3,12 @@
 
 using namespace std;
 
-void Klient::wpiszDane(string imie, string nazwisko, string adres, string telefon, string email)
+void Klient::wpiszDane(string imie, string nazwisko, string telefon, string email)
 {
+	
 }
+
+
 
 Klient::Klient()
 {

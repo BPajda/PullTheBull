@@ -2,15 +2,17 @@
 #include <iostream>
 #include "Karnet.h"
 #include "KontoUzytkownika.h"
+#include "Osoba.h"
+
 
 using namespace std;
 
-class Klient
+class Klient:Osoba
 {
+public:
 	Karnet posiadanyKarnet;
 	KontoUzytkownika kontoUzytkownika;
-public:
-	void wpiszDane(string imie, string nazwisko, string adres, string telefon, string email);
+	void wpiszDane(string imie, string nazwisko, string telefon, string email);
 
 	Klient();
 	~Klient();
