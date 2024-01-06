@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
-    <ProjectGuid>{44A0C464-052C-450C-8E79-D2EBAD854A7D}</ProjectGuid>
+    <ProjectGuid>{D1B4DFBF-DB97-47CB-9A2B-AA0E3DF1E1B8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GymAppTests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -166,11 +166,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PullTheBull\GymApp.vcxproj">
-      <Project>{44495a10-7a3f-499d-b079-280113cd738f}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
