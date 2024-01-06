@@ -65,8 +65,8 @@ namespace GymAppTests
 			klient1.wpiszDane("Jan", "Kowalski", "444444444", "j.kowal@gmail.com");
 			Assert::AreEqual("Jan", imie);
 			Assert::AreEqual("Kowalski", nazwisko);
-			Assert::AreEqual("Kowalski", telefon);
-			Assert::AreEqual("Kowalski", email);
+			Assert::AreEqual("444444444", telefon);
+			Assert::AreEqual("j.kowal@gmail.com", email);
 		}
 		TEST_METHOD(KlientConstr)
 		{
@@ -78,9 +78,62 @@ namespace GymAppTests
 
 			Assert::AreEqual("Jan", imie);
 			Assert::AreEqual("Kowalski", nazwisko);
-			Assert::AreEqual("Kowalski", telefon);
-			Assert::AreEqual("Kowalski", email);
+			Assert::AreEqual("444444444", telefon);
+			Assert::AreEqual("j.kowal@gmail.com", email);
 		}
+
+	};
+	TEST_CLASS(KontoUzytkownikaClass)
+	{
+		TEST_METHOD(wpiszDaneLog)
+		{
+			KontoUzytkownika konto1;
+			const char* login = "jkowal";
+			const char* haslo = "1234";
+
+			konto1.wpiszDaneLogowania("akrawiec", "4321");
+			Assert::AreEqual(login, "akrawiec");
+			Assert::AreEqual(haslo, "4321");
+		}
+		TEST_METHOD(KontoUzytkownikaConstr)
+		{
+			KontoUzytkownika konto1;
+			const char* login = "jkowal";
+			const char* haslo = "1234";
+			konto1 = KontoUzytkownika();
+
+
+			Assert::AreEqual(login, "akrawiec");
+			Assert::AreEqual(haslo, "4321");
+		}
+		TEST_METHOD(zarzadzajKontemAdmin)
+		{
+			KontoUzytkownika konto1;
+			const char* login = "jkowal";
+			const char* haslo = "1234";
+
+			konto1.zarzadzajKontemAdmin("akrawiec", "4321");
+			Assert::AreEqual(login, "akrawiec");
+			Assert::AreEqual(haslo, "4321");
+		}
+		TEST_METHOD(rezerwacjaZajec)
+		{
+		}
+		TEST_METHOD(usuniecieRezerwacji)
+		{
+		}
+		TEST_METHOD(przegladajZajecia)
+		{
+		}
+		TEST_METHOD(przegladajCennik)
+		{
+		}
+		TEST_METHOD(wyswietlKarnet)
+		{
+		}
+
+
+
 
 	};
 }
