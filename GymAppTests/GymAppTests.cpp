@@ -118,22 +118,58 @@ namespace GymAppTests
 		}
 		TEST_METHOD(rezerwacjaZajec)
 		{
+			Assert::AreEqual(0, "4321");
 		}
 		TEST_METHOD(usuniecieRezerwacji)
 		{
+			Assert::AreEqual(0, "4321");
 		}
 		TEST_METHOD(przegladajZajecia)
 		{
+			Assert::AreEqual(0, "4321");
 		}
 		TEST_METHOD(przegladajCennik)
 		{
+			Assert::AreEqual(0, "4321");
 		}
 		TEST_METHOD(wyswietlKarnet)
 		{
+			Assert::AreEqual(0, "4321");
 		}
 
+	};
+	TEST_CLASS(TypKarnetuClass)
+	{
+	public:
 
+		TEST_METHOD(TypKarnetuConstr)
+		{
+			TypKarnetu karnet1;
+			karnet1.nazwa = "miesieczny";
+			karnet1.cena = 100;
+			karnet1.open = true;
+			karnet1.zajecia = false;
 
+			karnet1 = TypKarnetu("semsetralny", 120, false, true);
+			Assert::AreEqual(120, karnet1.cena);
+			Assert::AreEqual(false, karnet1.open);
+			Assert::AreEqual(true, karnet1.zajecia);
 
+		}
+		TEST_METHOD(modyfikujDaneKarnetu)
+		{
+			TypKarnetu karnet1;
+			karnet1.nazwa = "miesieczny";
+			karnet1.cena = 100;
+			karnet1.open = true;
+			karnet1.zajecia = false;
+
+			karnet1.modyfikujDaneKarnetu("semsetralny", 120, false, true);
+			Assert::AreEqual(120, karnet1.cena);
+			Assert::AreEqual(false, karnet1.open);
+			Assert::AreEqual(true, karnet1.zajecia);
+
+		}
+		
 	};
 }
