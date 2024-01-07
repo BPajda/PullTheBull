@@ -3,14 +3,14 @@
 
 using namespace std;
 
-void TypKarnetu::zwrocListeKarnetow()
-{
-}
 
 void TypKarnetu::modyfikujDaneKarnetu(string nazwa, int cena, bool open, bool zajecia)
 {
 }
 
+TypKarnetu::TypKarnetu(string nazwa, int cena, bool open, bool zajecia)
+{
+}
 TypKarnetu::TypKarnetu()
 {
 }
