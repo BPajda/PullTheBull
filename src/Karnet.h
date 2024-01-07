@@ -6,11 +6,18 @@ using namespace std;
 
 class Karnet
 {
-	int ostatniaPlatnosc;
-	TypKarnetu * typkarnetu;
+public:
+	time_t ostatniaPlatnosc;
+	TypKarnetu typkarnetu;
 public:
 	bool sprawdzWaznosc();
 	void oplacKarnet();
+	void wyswietlKarnet();
+
+	time_t getOstatniaPlatnosc();
+	TypKarnetu getTypKarnetu();
+
+	Karnet(time_t ostatniaPlatnosc, TypKarnetu typKarnetu);
 	Karnet();
 	~Karnet();
 };

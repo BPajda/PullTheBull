@@ -1,0 +1,4 @@
+OPEN-PREMIUM	150	1	1
+OPEN	120	1	0
+HALF-OPEN	90	0	0
+pierwszy-lepszy	10	0	0

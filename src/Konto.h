@@ -5,6 +5,7 @@ using namespace std;
 
 class Konto 
 {
+protected:
     string login;
     string haslo;
     string IDKonta;
