@@ -491,6 +491,7 @@ int main() {
 						do 
 						{
 							system("cls");
+							cout << "Po usunieciu konta nastapi wylogowanie" << endl;
 							cout << "Czy na pewno chcesz trwale usunac konto?" << endl;
 							cout << "T) TAK" << endl;
 							cout << "N) NIE" << endl;
@@ -516,6 +517,7 @@ int main() {
 								plikUsuwanie << konta[i] << endl;
 							}
 							plikUsuwanie.close();
+							goto menu;
 						}
 						break;
 					case 27:
