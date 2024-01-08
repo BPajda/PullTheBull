@@ -20,6 +20,7 @@ public:
 	Karnet& getKarnet();
 	KontoUzytkownika getKontoUzytkownika();
 	Klient(string imie, string nazwisko, string telefon, string email);
+
 	Klient();
 	~Klient();
 };
