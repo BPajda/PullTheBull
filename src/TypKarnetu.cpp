@@ -15,9 +15,6 @@ TypKarnetu::TypKarnetu(string nazwa, int cena, bool open, bool zajecia)
 	this->zajecia = zajecia;
 }
 
-TypKarnetu::TypKarnetu(string nazwa, int cena, bool open, bool zajecia)
-{
-}
 TypKarnetu::TypKarnetu()
 {
 }
