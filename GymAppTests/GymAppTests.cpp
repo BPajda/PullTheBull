@@ -43,10 +43,8 @@ namespace GymAppTests
 			Karnet karnet3;
 			karnet3.ostatniaPlatnosc = time(0);
 			time_t czas = 0;
-			karnet3.typkarnetu = NULL;
 			
 			Assert::AreEqual(karnet3.ostatniaPlatnosc, czas);
-			Assert::IsNotNull(karnet3.typkarnetu);
 
 		}
 
@@ -171,5 +169,51 @@ namespace GymAppTests
 
 		}
 		
+	};
+	TEST_CLASS(CennikClass)
+	{
+	public:
+
+		TEST_METHOD(dodajKarnet)
+		{
+			Cennik cennik1;
+			TypKarnetu weekendowy;
+			weekendowy = TypKarnetu("weekendowy", 100, true, true);
+			cennik1.dodajKarnet(weekendowy);
+			Assert::AreEqual(weekendowy.nazwa, cennik1.typyKarnetow[cennik1.typyKarnetow.size() - 1].nazwa);
+			Assert::AreEqual(weekendowy.cena, cennik1.typyKarnetow[cennik1.typyKarnetow.size() - 1].cena);
+			Assert::AreEqual(weekendowy.open, cennik1.typyKarnetow[cennik1.typyKarnetow.size() - 1].open);
+			Assert::AreEqual(weekendowy.zajecia, cennik1.typyKarnetow[cennik1.typyKarnetow.size() - 1].zajecia);
+
+		}
+		TEST_METHOD(usunKarnet)
+		{
+			Cennik cennik2;
+			TypKarnetu weekendowy;
+			weekendowy = TypKarnetu("weekendowy", 100, true, true);
+			cennik2.dodajKarnet(weekendowy);
+			unsigned long long  i = cennik2.typyKarnetow.size();
+			cennik2.usunKarnet("weekendowy");
+			Assert::AreEqual(i, cennik2.typyKarnetow.size() - 1);
+
+		}
+		TEST_METHOD(CennikConstr)
+		{
+			Cennik cennik3;
+			TypKarnetu karnet1, karnet2;
+			vector<TypKarnetu> lista = { karnet1, karnet2 };
+			cennik3.typyKarnetow = lista;
+			cennik3 = Cennik(lista);
+			Assert::AreEqual(lista[0].nazwa, cennik3.typyKarnetow[0].nazwa);
+			Assert::AreEqual(lista[0].cena, cennik3.typyKarnetow[0].cena);
+			Assert::AreEqual(lista[0].open, cennik3.typyKarnetow[0].open);
+			Assert::AreEqual(lista[0].zajecia, cennik3.typyKarnetow[0].zajecia);
+			Assert::AreEqual(lista[1].nazwa, cennik3.typyKarnetow[1].nazwa);
+			Assert::AreEqual(lista[1].cena, cennik3.typyKarnetow[1].cena);
+			Assert::AreEqual(lista[1].open, cennik3.typyKarnetow[1].open);
+			Assert::AreEqual(lista[1].zajecia, cennik3.typyKarnetow[1].zajecia);
+
+		}
+
 	};
 }
