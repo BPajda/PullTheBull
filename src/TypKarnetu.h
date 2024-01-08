@@ -6,14 +6,17 @@ using namespace std;
 
 class TypKarnetu
 {
-
-public:
 	string nazwa;
 	int cena;
 	bool open;
 	bool zajecia;
-	void modyfikujDaneKarnetu(string nazwa, int cena = 0, bool open = false, bool zajecia = false);
 
+public:
+	void modyfikujDaneKarnetu(string nazwa, int cena = 0, bool open = false, bool zajecia = false);
+	string getNazwa();
+	int getCena();
+	bool getOpen();
+	bool getZajecia();
 	TypKarnetu(string nazwa, int cena, bool open, bool zajecia);
 	TypKarnetu();
 	~TypKarnetu();

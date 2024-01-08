@@ -1,0 +1,3 @@
+Zumba	taneczny_trening_aerobowy	1704575934	60	15	Katarzyna	grzybson	ziomal	bpajda	
+Fitness	trening_prozdrowotny	1704579934	60	2	Michal	bambo	dsadad	
+Pilates	rozciaganie_i_uelastycznienie_ciala	1704589934	45	10	Julia	

@@ -1,5 +1,7 @@
-#include <iostream>
 #include "Osoba.h"
+#pragma once
+#include <iostream>
+
 
 using namespace std;
 

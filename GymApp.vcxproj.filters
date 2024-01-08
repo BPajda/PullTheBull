@@ -50,14 +50,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\KontoUzytkownika.h">
+    <ClInclude Include="src\Konto.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="src\Konto.h">
+    <ClInclude Include="src\KontoUzytkownika.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\Konta.txt" />
+    <Text Include="src\TypyKarnetow.txt" />
+    <Text Include="src\ListaZajec.txt" />
   </ItemGroup>
 </Project>

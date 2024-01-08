@@ -1,7 +1,13 @@
-#include <iostream>
 #include "KontoUzytkownika.h"
+#include <iostream>
 
 using namespace std;
+
+KontoUzytkownika::KontoUzytkownika(string login, string haslo)
+{
+	this->login = login;
+	this->haslo = haslo;
+}
 
 KontoUzytkownika::KontoUzytkownika()
 {
@@ -19,19 +25,19 @@ void KontoUzytkownika::usuniecieRezerwacji()
 {
 }
 
-void KontoUzytkownika::przegladajZajecia()
+void KontoUzytkownika::przegladajZajecia(vector<int> indeksyZajec, vector<Zajecia> listaZajec)
 {
-}
-
-void KontoUzytkownika::przegladajCennik()
-{
+	int liczbaZajec = 0;
+	cout << "===== Twoje Zajecia =====" << endl << endl;
+	for (int i = 0; i < indeksyZajec.size(); i++)
+	{
+				cout << indeksyZajec[i] << ") ";
+				listaZajec[indeksyZajec[i]].info();
+	}
+	cout << "=========================" << endl;
 }
 
 void KontoUzytkownika::wpiszDaneLogowania(string login, string haslo)
-{
-}
-
-void KontoUzytkownika::wyswietlKarnet()
 {
 }
 
@@ -39,3 +45,7 @@ void KontoUzytkownika::zarzadzajKontemAdmin(string loginDoZmiany, string hasloDo
 {
 }
 
+string KontoUzytkownika::getLogin()
+{
+	return this->login;
+}
