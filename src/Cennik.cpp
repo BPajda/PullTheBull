@@ -1,5 +1,5 @@
-#include <iostream>
 #include "Cennik.h"
+#include <iostream>
 
 using namespace std;
 
@@ -10,6 +10,13 @@ void Cennik::dodajKarnet(TypKarnetu nowyTyp)
 
 void Cennik::usunKarnet(string nazwa)
 {
+	for (int i = 0; i < this->typyKarnetow.size(); i++)
+	{
+		if (this->typyKarnetow[i].getNazwa() == nazwa)
+		{
+			this->typyKarnetow.erase(this->typyKarnetow.begin() + i);
+		}
+	}
 }
 
 void Cennik::zmienKarnet(string nazwa)
@@ -55,4 +62,8 @@ Cennik::Cennik()
 
 Cennik::~Cennik()
 {
+}
+
+vector<TypKarnetu>& Cennik::getTypyKarnetow() {
+	return this->typyKarnetow;
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include "Pracownik.h"
 #include <vector>
 
 using namespace std;

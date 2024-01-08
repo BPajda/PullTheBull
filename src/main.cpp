@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -68,6 +69,8 @@ int main() {
 
 	vector<Zajecia> listaZajec;
 	vector<string> loginyUczestnikow;
+	vector<Konto> listaKont;
+	vector<string> konta;
 
 	pliki.open("src/ListaZajec.txt", ios::in);
 	while (pliki >> nazwa >> opis >> dataZajec >> czasTrwania >> liczbaMiejsc >> loginProwadzacego)
@@ -117,7 +120,7 @@ int main() {
 		char uprawnienia;
 		time_t dataOplacenia;
 		Klient klient;
-		vector<string> konta;
+		Pracownik pracownik;
 		string linia;
 		fstream plikUsuwanie;
 		char wybrany;
@@ -165,7 +168,7 @@ int main() {
 					getline(plik, wiersz);
 				}
 
-				plik.clear();														// powrót wskaŸnika kursora w pliku na jego pocz¹tek
+				plik.clear();						// powrót wskaŸnika kursora w pliku na jego pocz¹tek
 				plik.seekg(0, ios_base::beg);
 
 				if (!zalogowano) {
@@ -193,6 +196,11 @@ int main() {
 					}
 				}
 				klient.setIndeksyZajec(indeksyZajec);
+			}
+			else if(zalogowano)
+			{
+				pracownik = Pracownik(imie, nazwisko, telefon, email);
+				pracownik.setKontoPracownika(KontoPracownika(login, haslo));
 			}
 			
 			while (zalogowano) {
@@ -535,10 +543,13 @@ int main() {
 					wybor = _getch();
 					switch (wybor) {
 					case '1':
+						pracownik.getKontoPracownika().zarzadzajCennikiem(cennik);
 						break;
 					case '2':
+						pracownik.getKontoPracownika().zarzadzajKontami();
 						break;
 					case '3':
+						pracownik.getKontoPracownika().zarzadzajHarmoZajec(harmonogram);
 						break;
 					case 27:
 						goto menu;

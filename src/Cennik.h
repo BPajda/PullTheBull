@@ -17,4 +17,6 @@ public:
 	Cennik(vector<TypKarnetu> typyKarnetow);
 	Cennik();
 	~Cennik();
+
+	vector<TypKarnetu>& getTypyKarnetow();
 };

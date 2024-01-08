@@ -17,14 +17,6 @@ KontoUzytkownika::~KontoUzytkownika()
 {
 }
 
-void KontoUzytkownika::rezerwacjaZajec()
-{
-}
-
-void KontoUzytkownika::usuniecieRezerwacji()
-{
-}
-
 void KontoUzytkownika::przegladajZajecia(vector<int> indeksyZajec, vector<Zajecia> listaZajec)
 {
 	int liczbaZajec = 0;
