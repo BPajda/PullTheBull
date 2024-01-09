@@ -216,4 +216,72 @@ namespace GymAppTests
 		}
 
 	};
+	TEST_CLASS(HarmonogramClass)
+	{
+	public:
+
+		TEST_METHOD(dodajZajecia)
+		{
+			HarmonogramZajec harmonogram1;
+			Zajecia weekendowy;
+			vector<string> uczestnicy = { "ania", "basia" };
+			weekendowy = Zajecia("pilates", "trudne", time(0), 3600, 10, "Adam", uczestnicy);
+			unsigned long long i = harmonogram1.listaZajec.size();
+			harmonogram1.dodajZajecia("pilates", 15);
+			Assert::AreEqual(i, harmonogram1.listaZajec.size()+1);
+
+		}
+		TEST_METHOD(usunZajecia)
+		{
+			HarmonogramZajec harmonogram2;
+			Zajecia weekendowy;
+			vector<string> uczestnicy = { "ania", "basia" };
+			weekendowy = Zajecia("pilates", "trudne", time(0), 3600, 10, "Adam", uczestnicy);
+			harmonogram2.dodajZajecia("pilates", 15);
+			unsigned long long  i = harmonogram2.listaZajec.size();
+			harmonogram2.usunZajecia("pilates", 15);
+			Assert::AreEqual(i, harmonogram2.listaZajec.size() - 1);
+
+		}
+		
+		TEST_METHOD(HarmonogramConstr)
+		{
+			HarmonogramZajec harmonogram3;
+			Zajecia zajecia1, zajecia2;
+			vector<Zajecia> lista = { zajecia1, zajecia2 };
+			harmonogram3.listaZajec = lista;
+			harmonogram3 = HarmonogramZajec(lista);
+			Assert::AreEqual(lista[0].prowadzacy, harmonogram3.listaZajec[0].prowadzacy);
+			Assert::AreEqual(lista[0].nazwa, harmonogram3.listaZajec[0].nazwa);
+			Assert::AreEqual(lista[0].opis, harmonogram3.listaZajec[0].opis);
+			Assert::AreEqual(lista[0].dataZajec, harmonogram3.listaZajec[0].dataZajec);
+			Assert::AreEqual(lista[0].czasTrwania, harmonogram3.listaZajec[0].czasTrwania);
+			Assert::AreEqual(lista[0].liczbaMiejsc, harmonogram3.listaZajec[0].liczbaMiejsc);
+			Assert::AreEqual(lista[1].prowadzacy, harmonogram3.listaZajec[1].prowadzacy);
+			Assert::AreEqual(lista[1].nazwa, harmonogram3.listaZajec[1].nazwa);
+			Assert::AreEqual(lista[1].opis, harmonogram3.listaZajec[1].opis);
+			Assert::AreEqual(lista[1].dataZajec, harmonogram3.listaZajec[1].dataZajec);
+			Assert::AreEqual(lista[1].czasTrwania, harmonogram3.listaZajec[1].czasTrwania);
+			Assert::AreEqual(lista[1].liczbaMiejsc, harmonogram3.listaZajec[1].liczbaMiejsc);
+
+		}
+		
+
+	};
+	TEST_CLASS(KontoPracownikaClass)
+	{
+	public:
+
+		TEST_METHOD(dodajZajecia)
+		{
+			HarmonogramZajec harmonogram1;
+			Zajecia weekendowy;
+			vector<string> uczestnicy = { "ania", "basia" };
+			weekendowy = Zajecia("pilates", "trudne", time(0), 3600, 10, "Adam", uczestnicy);
+			unsigned long long i = harmonogram1.listaZajec.size();
+			harmonogram1.dodajZajecia("pilates", 15);
+			Assert::AreEqual(i, harmonogram1.listaZajec.size() + 1);
+
+		}
+	};
 }

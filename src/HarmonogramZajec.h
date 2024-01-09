@@ -1,14 +1,14 @@
 #pragma once
-#include <iostream>
 #include "Zajecia.h"
+#include <iostream>
 #include <vector>
 
 using namespace std;
 
 class HarmonogramZajec
 {
-	vector<Zajecia> listaZajec;
 public:
+	vector<Zajecia> listaZajec;
 	void dodajZajecia(string nazwa, int dataZajec);
 	void usunZajecia(string nazwa, int dataZajec);
 	void zmienZajecia(string nazwa, int dataZajec, int nowaData);
