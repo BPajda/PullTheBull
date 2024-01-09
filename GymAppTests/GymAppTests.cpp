@@ -299,26 +299,77 @@ namespace GymAppTests
 	{
 	public:
 
-		TEST_METHOD(wpiszDaneLog)
+		TEST_METHOD(ZajeciaConstr)
 		{
-			KontoPracownika konto1;
-			const char* login = "jkowal";
-			const char* haslo = "1234";
-
-			konto1.wpiszDaneLogowania("akrawiec", "4321");
-			Assert::AreEqual(login, "akrawiec");
-			Assert::AreEqual(haslo, "4321");
+			Zajecia zajecia1;
+			string nazwa = "box";
+			string opis = "latwe";
+			time_t dataZajec = time(0);
+			int czasTrwania = 1000;
+			int liczbaMiejsc = 12;
+			string prowadzacy = "Kasia";
+			vector<string> loginyUczestnikow = {"kasia", "asia"};
+			
+			zajecia1 = Zajecia(nazwa, opis, dataZajec, czasTrwania, liczbaMiejsc, prowadzacy, loginyUczestnikow);
+			Assert::AreEqual(nazwa, zajecia1.nazwa);
+			Assert::AreEqual(opis, zajecia1.opis);
+			Assert::AreEqual(dataZajec, zajecia1.dataZajec);
+			Assert::AreEqual(czasTrwania, zajecia1.czasTrwania);
+			Assert::AreEqual(liczbaMiejsc, zajecia1.liczbaMiejsc);
+			Assert::AreEqual(prowadzacy, zajecia1.prowadzacy);
+			Assert::AreEqual(loginyUczestnikow[0], zajecia1.loginyUczestnikow[0]);
+			Assert::AreEqual(loginyUczestnikow[1], zajecia1.loginyUczestnikow[1]);
 		}
-		TEST_METHOD(KontoUzytkownikaConstr)
+		TEST_METHOD(getProwadzacy)
 		{
-			KontoPracownika konto1;
-			const char* login = "jkowal";
-			const char* haslo = "1234";
-			konto1 = KontoPracownika();
+			Zajecia zajecia1;
+			zajecia1.prowadzacy = "Adam";
+			
+			Assert::AreEqual(zajecia1.prowadzacy, zajecia1.getProwadzacy());
+		}
+		TEST_METHOD(getNazwa)
+		{
+			Zajecia zajecia1;
+			zajecia1.nazwa = "pilates";
 
+			Assert::AreEqual(zajecia1.nazwa, zajecia1.getNazwa());
+		}
+		TEST_METHOD(getOpis)
+		{
+			Zajecia zajecia1;
+			zajecia1.opis = "trudne";
 
-			Assert::AreEqual(login, "akrawiec");
-			Assert::AreEqual(haslo, "4321");
+			Assert::AreEqual(zajecia1.opis, zajecia1.getOpis());
+		}
+		TEST_METHOD(getDataZajec)
+		{
+			Zajecia zajecia1;
+			zajecia1.dataZajec = time(0);
+
+			Assert::AreEqual(zajecia1.dataZajec, zajecia1.getDataZajec());
+		}
+		TEST_METHOD(getCzasTrwania)
+		{
+			Zajecia zajecia1;
+			zajecia1.czasTrwania = 3600;
+
+			Assert::AreEqual(zajecia1.czasTrwania, zajecia1.getCzasTrwania());
+		}
+		TEST_METHOD(getLicbzaMiejsc)
+		{
+			Zajecia zajecia1;
+			zajecia1.liczbaMiejsc = 15;
+
+			Assert::AreEqual(zajecia1.liczbaMiejsc, zajecia1.getLiczbaMiejsc());
+		}
+		TEST_METHOD(getLoginyUczestnikow)
+		{
+			Zajecia zajecia1;
+			zajecia1.loginyUczestnikow = {"kasia", "asia"};
+
+			Assert::AreEqual(zajecia1.loginyUczestnikow[0], zajecia1.getLoginyUczestnikow()[0]);
+			Assert::AreEqual(zajecia1.loginyUczestnikow[1], zajecia1.getLoginyUczestnikow()[1]);
+
 		}
 
 	};
