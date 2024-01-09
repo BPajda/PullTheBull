@@ -272,16 +272,54 @@ namespace GymAppTests
 	{
 	public:
 
-		TEST_METHOD(dodajZajecia)
+		TEST_METHOD(wpiszDaneLog)
 		{
-			HarmonogramZajec harmonogram1;
-			Zajecia weekendowy;
-			vector<string> uczestnicy = { "ania", "basia" };
-			weekendowy = Zajecia("pilates", "trudne", time(0), 3600, 10, "Adam", uczestnicy);
-			unsigned long long i = harmonogram1.listaZajec.size();
-			harmonogram1.dodajZajecia("pilates", 15);
-			Assert::AreEqual(i, harmonogram1.listaZajec.size() + 1);
+			KontoPracownika konto1;
+			const char* login = "jkowal";
+			const char* haslo = "1234";
 
+			konto1.wpiszDaneLogowania("akrawiec", "4321");
+			Assert::AreEqual(login, "akrawiec");
+			Assert::AreEqual(haslo, "4321");
 		}
+		TEST_METHOD(KontoUzytkownikaConstr)
+		{
+			KontoPracownika konto1;
+			const char* login = "jkowal";
+			const char* haslo = "1234";
+			konto1 = KontoPracownika();
+
+
+			Assert::AreEqual(login, "akrawiec");
+			Assert::AreEqual(haslo, "4321");
+		}
+
+	};
+	TEST_CLASS(ZajeciaClass)
+	{
+	public:
+
+		TEST_METHOD(wpiszDaneLog)
+		{
+			KontoPracownika konto1;
+			const char* login = "jkowal";
+			const char* haslo = "1234";
+
+			konto1.wpiszDaneLogowania("akrawiec", "4321");
+			Assert::AreEqual(login, "akrawiec");
+			Assert::AreEqual(haslo, "4321");
+		}
+		TEST_METHOD(KontoUzytkownikaConstr)
+		{
+			KontoPracownika konto1;
+			const char* login = "jkowal";
+			const char* haslo = "1234";
+			konto1 = KontoPracownika();
+
+
+			Assert::AreEqual(login, "akrawiec");
+			Assert::AreEqual(haslo, "4321");
+		}
+
 	};
 }

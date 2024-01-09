@@ -21,7 +21,7 @@ void HarmonogramZajec::przegladajHarmonogram()
 	cout << "===== Harmonogram Zajec =====" << endl << endl;
 	for (int i = 0; i < this->listaZajec.size(); i++)
 	{
-		cout << " " << i+1 << ") ";
+		cout << " " << i + 1 << ") ";
 		listaZajec[i].info();
 	}
 	cout << "=============================" << endl;
