@@ -19,8 +19,15 @@ void Cennik::usunKarnet(string nazwa)
 	}
 }
 
-void Cennik::zmienKarnet(string nazwa)
+void Cennik::zmienKarnet(string nazwa, TypKarnetu zmienionyKarnet)
 {
+	for (int i = 0; i < this->typyKarnetow.size(); i++)
+	{
+		if (this->typyKarnetow[i].getNazwa() == nazwa)
+		{
+			this->typyKarnetow[i] = zmienionyKarnet;
+		}
+	}
 }
 
 void Cennik::przegladajCennik()

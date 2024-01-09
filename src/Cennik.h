@@ -11,7 +11,7 @@ class Cennik
 public:
 	void dodajKarnet(TypKarnetu nowyTyp);
 	void usunKarnet(string nazwa);
-	void zmienKarnet(string nazwa);
+	void zmienKarnet(string nazwa, TypKarnetu zmienionyKarnet);
 	void przegladajCennik();
 
 	Cennik(vector<TypKarnetu> typyKarnetow);

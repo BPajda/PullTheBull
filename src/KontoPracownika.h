@@ -20,3 +20,7 @@ public:
 
 	string getLogin();
 };
+
+string podlogiNaSpacje(string tekst);
+string spacjeNaPodlogi(string tekst);
+time_t parsujDate(string& dataStr);
