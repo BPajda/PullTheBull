@@ -6,6 +6,7 @@ using namespace std;
 
 class TypKarnetu
 {
+public:
 	string nazwa;
 	int cena;
 	bool open;

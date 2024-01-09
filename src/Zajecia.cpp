@@ -11,13 +11,13 @@ void Zajecia::modyfikujZajecia()
 
 Zajecia::Zajecia(string nazwa, string opis, time_t dataZajec, int czasTrwania, int liczbaMiejsc, string prowadzacy, vector<string> loginyUczestnikow)
 {
-	this->prowadzacy = prowadzacy;
-	this->nazwa = nazwa;
-	this->opis = opis;
-	this->dataZajec = dataZajec;
-	this->czasTrwania = czasTrwania;
-	this->liczbaMiejsc = liczbaMiejsc;
-	this->loginyUczestnikow = loginyUczestnikow;
+    this->prowadzacy = prowadzacy;
+    this->nazwa = nazwa;
+    this->opis = opis;
+    this->dataZajec = dataZajec;
+    this->czasTrwania = czasTrwania;
+    this->liczbaMiejsc = liczbaMiejsc;
+    this->loginyUczestnikow = loginyUczestnikow;
 }
 
 Zajecia::Zajecia()
@@ -30,37 +30,37 @@ Zajecia::~Zajecia()
 
 string Zajecia::getProwadzacy()
 {
-	return this->prowadzacy;
+    return this->prowadzacy;
 }
 
 vector<string>& Zajecia::getLoginyUczestnikow()
 {
-	return this->loginyUczestnikow;
+    return this->loginyUczestnikow;
 }
 
 string Zajecia::getNazwa()
 {
-	return this->nazwa;
+    return this->nazwa;
 }
 
 string Zajecia::getOpis()
 {
-	return this->opis;
+    return this->opis;
 }
 
 time_t Zajecia::getDataZajec()
 {
-	return this->dataZajec;
+    return this->dataZajec;
 }
 
 int Zajecia::getCzasTrwania()
 {
-	return this->czasTrwania;
+    return this->czasTrwania;
 }
 
 int Zajecia::getLiczbaMiejsc()
 {
-	return this->liczbaMiejsc;
+    return this->liczbaMiejsc;
 }
 
 void Zajecia::info()

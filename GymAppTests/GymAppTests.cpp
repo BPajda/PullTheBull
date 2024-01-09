@@ -43,10 +43,8 @@ namespace GymAppTests
 			Karnet karnet3;
 			karnet3.ostatniaPlatnosc = time(0);
 			time_t czas = 0;
-			karnet3.typkarnetu = NULL;
 			
 			Assert::AreEqual(karnet3.ostatniaPlatnosc, czas);
-			Assert::IsNotNull(karnet3.typkarnetu);
 
 		}
 
@@ -171,5 +169,208 @@ namespace GymAppTests
 
 		}
 		
+	};
+	TEST_CLASS(CennikClass)
+	{
+	public:
+
+		TEST_METHOD(dodajKarnet)
+		{
+			Cennik cennik1;
+			TypKarnetu weekendowy;
+			weekendowy = TypKarnetu("weekendowy", 100, true, true);
+			cennik1.dodajKarnet(weekendowy);
+			Assert::AreEqual(weekendowy.nazwa, cennik1.typyKarnetow[cennik1.typyKarnetow.size() - 1].nazwa);
+			Assert::AreEqual(weekendowy.cena, cennik1.typyKarnetow[cennik1.typyKarnetow.size() - 1].cena);
+			Assert::AreEqual(weekendowy.open, cennik1.typyKarnetow[cennik1.typyKarnetow.size() - 1].open);
+			Assert::AreEqual(weekendowy.zajecia, cennik1.typyKarnetow[cennik1.typyKarnetow.size() - 1].zajecia);
+
+		}
+		TEST_METHOD(usunKarnet)
+		{
+			Cennik cennik2;
+			TypKarnetu weekendowy;
+			weekendowy = TypKarnetu("weekendowy", 100, true, true);
+			cennik2.dodajKarnet(weekendowy);
+			unsigned long long  i = cennik2.typyKarnetow.size();
+			cennik2.usunKarnet("weekendowy");
+			Assert::AreEqual(i, cennik2.typyKarnetow.size() - 1);
+
+		}
+		TEST_METHOD(CennikConstr)
+		{
+			Cennik cennik3;
+			TypKarnetu karnet1, karnet2;
+			vector<TypKarnetu> lista = { karnet1, karnet2 };
+			cennik3.typyKarnetow = lista;
+			cennik3 = Cennik(lista);
+			Assert::AreEqual(lista[0].nazwa, cennik3.typyKarnetow[0].nazwa);
+			Assert::AreEqual(lista[0].cena, cennik3.typyKarnetow[0].cena);
+			Assert::AreEqual(lista[0].open, cennik3.typyKarnetow[0].open);
+			Assert::AreEqual(lista[0].zajecia, cennik3.typyKarnetow[0].zajecia);
+			Assert::AreEqual(lista[1].nazwa, cennik3.typyKarnetow[1].nazwa);
+			Assert::AreEqual(lista[1].cena, cennik3.typyKarnetow[1].cena);
+			Assert::AreEqual(lista[1].open, cennik3.typyKarnetow[1].open);
+			Assert::AreEqual(lista[1].zajecia, cennik3.typyKarnetow[1].zajecia);
+
+		}
+
+	};
+	TEST_CLASS(HarmonogramClass)
+	{
+	public:
+
+		TEST_METHOD(dodajZajecia)
+		{
+			HarmonogramZajec harmonogram1;
+			Zajecia weekendowy;
+			vector<string> uczestnicy = { "ania", "basia" };
+			weekendowy = Zajecia("pilates", "trudne", time(0), 3600, 10, "Adam", uczestnicy);
+			unsigned long long i = harmonogram1.listaZajec.size();
+			harmonogram1.dodajZajecia("pilates", 15);
+			Assert::AreEqual(i, harmonogram1.listaZajec.size()+1);
+
+		}
+		TEST_METHOD(usunZajecia)
+		{
+			HarmonogramZajec harmonogram2;
+			Zajecia weekendowy;
+			vector<string> uczestnicy = { "ania", "basia" };
+			weekendowy = Zajecia("pilates", "trudne", time(0), 3600, 10, "Adam", uczestnicy);
+			harmonogram2.dodajZajecia("pilates", 15);
+			unsigned long long  i = harmonogram2.listaZajec.size();
+			harmonogram2.usunZajecia("pilates", 15);
+			Assert::AreEqual(i, harmonogram2.listaZajec.size() - 1);
+
+		}
+		
+		TEST_METHOD(HarmonogramConstr)
+		{
+			HarmonogramZajec harmonogram3;
+			Zajecia zajecia1, zajecia2;
+			vector<Zajecia> lista = { zajecia1, zajecia2 };
+			harmonogram3.listaZajec = lista;
+			harmonogram3 = HarmonogramZajec(lista);
+			Assert::AreEqual(lista[0].prowadzacy, harmonogram3.listaZajec[0].prowadzacy);
+			Assert::AreEqual(lista[0].nazwa, harmonogram3.listaZajec[0].nazwa);
+			Assert::AreEqual(lista[0].opis, harmonogram3.listaZajec[0].opis);
+			Assert::AreEqual(lista[0].dataZajec, harmonogram3.listaZajec[0].dataZajec);
+			Assert::AreEqual(lista[0].czasTrwania, harmonogram3.listaZajec[0].czasTrwania);
+			Assert::AreEqual(lista[0].liczbaMiejsc, harmonogram3.listaZajec[0].liczbaMiejsc);
+			Assert::AreEqual(lista[1].prowadzacy, harmonogram3.listaZajec[1].prowadzacy);
+			Assert::AreEqual(lista[1].nazwa, harmonogram3.listaZajec[1].nazwa);
+			Assert::AreEqual(lista[1].opis, harmonogram3.listaZajec[1].opis);
+			Assert::AreEqual(lista[1].dataZajec, harmonogram3.listaZajec[1].dataZajec);
+			Assert::AreEqual(lista[1].czasTrwania, harmonogram3.listaZajec[1].czasTrwania);
+			Assert::AreEqual(lista[1].liczbaMiejsc, harmonogram3.listaZajec[1].liczbaMiejsc);
+
+		}
+		
+
+	};
+	TEST_CLASS(KontoPracownikaClass)
+	{
+	public:
+
+		TEST_METHOD(wpiszDaneLog)
+		{
+			KontoPracownika konto1;
+			const char* login = "jkowal";
+			const char* haslo = "1234";
+
+			konto1.wpiszDaneLogowania("akrawiec", "4321");
+			Assert::AreEqual(login, "akrawiec");
+			Assert::AreEqual(haslo, "4321");
+		}
+		TEST_METHOD(KontoUzytkownikaConstr)
+		{
+			KontoPracownika konto1;
+			const char* login = "jkowal";
+			const char* haslo = "1234";
+			konto1 = KontoPracownika();
+
+
+			Assert::AreEqual(login, "akrawiec");
+			Assert::AreEqual(haslo, "4321");
+		}
+
+	};
+	TEST_CLASS(ZajeciaClass)
+	{
+	public:
+
+		TEST_METHOD(ZajeciaConstr)
+		{
+			Zajecia zajecia1;
+			string nazwa = "box";
+			string opis = "latwe";
+			time_t dataZajec = time(0);
+			int czasTrwania = 1000;
+			int liczbaMiejsc = 12;
+			string prowadzacy = "Kasia";
+			vector<string> loginyUczestnikow = {"kasia", "asia"};
+			
+			zajecia1 = Zajecia(nazwa, opis, dataZajec, czasTrwania, liczbaMiejsc, prowadzacy, loginyUczestnikow);
+			Assert::AreEqual(nazwa, zajecia1.nazwa);
+			Assert::AreEqual(opis, zajecia1.opis);
+			Assert::AreEqual(dataZajec, zajecia1.dataZajec);
+			Assert::AreEqual(czasTrwania, zajecia1.czasTrwania);
+			Assert::AreEqual(liczbaMiejsc, zajecia1.liczbaMiejsc);
+			Assert::AreEqual(prowadzacy, zajecia1.prowadzacy);
+			Assert::AreEqual(loginyUczestnikow[0], zajecia1.loginyUczestnikow[0]);
+			Assert::AreEqual(loginyUczestnikow[1], zajecia1.loginyUczestnikow[1]);
+		}
+		TEST_METHOD(getProwadzacy)
+		{
+			Zajecia zajecia1;
+			zajecia1.prowadzacy = "Adam";
+			
+			Assert::AreEqual(zajecia1.prowadzacy, zajecia1.getProwadzacy());
+		}
+		TEST_METHOD(getNazwa)
+		{
+			Zajecia zajecia1;
+			zajecia1.nazwa = "pilates";
+
+			Assert::AreEqual(zajecia1.nazwa, zajecia1.getNazwa());
+		}
+		TEST_METHOD(getOpis)
+		{
+			Zajecia zajecia1;
+			zajecia1.opis = "trudne";
+
+			Assert::AreEqual(zajecia1.opis, zajecia1.getOpis());
+		}
+		TEST_METHOD(getDataZajec)
+		{
+			Zajecia zajecia1;
+			zajecia1.dataZajec = time(0);
+
+			Assert::AreEqual(zajecia1.dataZajec, zajecia1.getDataZajec());
+		}
+		TEST_METHOD(getCzasTrwania)
+		{
+			Zajecia zajecia1;
+			zajecia1.czasTrwania = 3600;
+
+			Assert::AreEqual(zajecia1.czasTrwania, zajecia1.getCzasTrwania());
+		}
+		TEST_METHOD(getLicbzaMiejsc)
+		{
+			Zajecia zajecia1;
+			zajecia1.liczbaMiejsc = 15;
+
+			Assert::AreEqual(zajecia1.liczbaMiejsc, zajecia1.getLiczbaMiejsc());
+		}
+		TEST_METHOD(getLoginyUczestnikow)
+		{
+			Zajecia zajecia1;
+			zajecia1.loginyUczestnikow = {"kasia", "asia"};
+
+			Assert::AreEqual(zajecia1.loginyUczestnikow[0], zajecia1.getLoginyUczestnikow()[0]);
+			Assert::AreEqual(zajecia1.loginyUczestnikow[1], zajecia1.getLoginyUczestnikow()[1]);
+
+		}
+
 	};
 }
