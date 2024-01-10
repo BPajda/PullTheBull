@@ -10,7 +10,7 @@ class KontoPracownika:Konto
 {
 public:
 	void zarzadzajCennikiem(Cennik& cennik);
-	void zarzadzajKontami();
+	void zarzadzajKontami(Cennik cennik);
 	void zarzadzajHarmoZajec(HarmonogramZajec& harmonogram);
 	void wpiszDaneLogowania(string login, string haslo);
 
@@ -24,3 +24,5 @@ public:
 string podlogiNaSpacje(string tekst);
 string spacjeNaPodlogi(string tekst);
 time_t parsujDate(string& dataStr);
+bool dobryFormat(string data);
+bool czyZawiera(string tekst, string podciag);

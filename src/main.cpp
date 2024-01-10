@@ -69,7 +69,7 @@ int main() {
 
 	vector<Zajecia> listaZajec;
 	vector<string> loginyUczestnikow;
-	vector<Konto> listaKont;
+	vector<int> indeksyZajec;
 	vector<string> konta;
 
 	pliki.open("src/ListaZajec.txt", ios::in);
@@ -184,7 +184,7 @@ int main() {
 				klient = Klient(imie, nazwisko, telefon, email);
 				klient.setKarnet(Karnet(dataOplacenia, typyKarnetow[typKarnetu]));
 				klient.setKontoUzytkownika(KontoUzytkownika(login, haslo));
-				vector<int> indeksyZajec;
+				indeksyZajec.clear();
 				for (int i = 0; i < listaZajec.size(); i++)
 				{
 					for (int j = 0; j < listaZajec[i].getLoginyUczestnikow().size(); j++)
@@ -342,7 +342,20 @@ int main() {
 						}
 						break;
 					case '4':
-						zajecia:
+					zajecia:
+						listaZajec = harmonogram.getListaZajec();
+						indeksyZajec.clear();
+						for (int i = 0; i < listaZajec.size(); i++)
+						{
+							for (int j = 0; j < listaZajec[i].getLoginyUczestnikow().size(); j++)
+							{
+								if (login == listaZajec[i].getLoginyUczestnikow()[j])
+								{
+									indeksyZajec.push_back(i);
+								}
+							}
+						}
+						klient.setIndeksyZajec(indeksyZajec);
 						do {
 							system("cls");
 							klient.getKontoUzytkownika().przegladajZajecia(klient.getIndeksyZajec(), listaZajec);
@@ -385,7 +398,6 @@ int main() {
 										if (listaZajec[wybrany - 48].getLoginyUczestnikow()[l] == login)
 										{
 											listaZajec[wybrany - 48].getLoginyUczestnikow().erase(listaZajec[wybrany - 48].getLoginyUczestnikow().begin() + l);
-											harmonogram = HarmonogramZajec(listaZajec);
 											for (int k = 0; k < klient.getIndeksyZajec().size(); k++)
 											{
 												if (klient.getIndeksyZajec()[k] == wybrany-48)
@@ -393,6 +405,7 @@ int main() {
 													klient.getIndeksyZajec().erase(klient.getIndeksyZajec().begin() + k);
 												}
 											}
+											listaZajec = harmonogram.getListaZajec();
 											plikAktualizuj.open("src/ListaZajec.txt", ios::out);
 											for (int i = 0; i < listaZajec.size(); i++)
 											{
@@ -416,7 +429,8 @@ int main() {
 						}
 						break;
 					case '5':
-						harmonogram:
+					harmonogram:
+						listaZajec = harmonogram.getListaZajec();
 						do {
 							system("cls");
 							harmonogram.przegladajHarmonogram();
@@ -437,16 +451,16 @@ int main() {
 								harmonogram.przegladajHarmonogram();
 								cout << "ESC) Powrot" << endl;
 								wybrany = _getch();
-							} while (wybrany != 27 && (wybrany < '1' || wybrany > listaZajec.size()+48));
+							} while (wybrany != 27 && (wybrany < '0' || wybrany > listaZajec.size()+48-1));
 							if (wybrany == 27)
 							{
 								goto harmonogram;
 							}
 							else
 							{
-								for (int i = 0; i < listaZajec[wybrany - 48 - 1].getLoginyUczestnikow().size(); i++)
+								for (int i = 0; i < listaZajec[wybrany - 48].getLoginyUczestnikow().size(); i++)
 								{
-									if (listaZajec[wybrany - 48 - 1].getLoginyUczestnikow()[i] == login)
+									if (listaZajec[wybrany - 48].getLoginyUczestnikow()[i] == login)
 									{
 										do
 										{
@@ -457,9 +471,9 @@ int main() {
 										goto harmonogram;
 									}
 								}
-								if (listaZajec[wybrany - 48 - 1].getLiczbaMiejsc() - listaZajec[wybrany - 48 - 1].getLoginyUczestnikow().size() > 0)
+								if (listaZajec[wybrany - 48].getLiczbaMiejsc() - listaZajec[wybrany - 48].getLoginyUczestnikow().size() > 0)
 								{
-									listaZajec[wybrany - 48 - 1].getLoginyUczestnikow().push_back(login);
+									listaZajec[wybrany - 48].getLoginyUczestnikow().push_back(login);
 									harmonogram = HarmonogramZajec(listaZajec);
 									plikAktualizuj.open("src/ListaZajec.txt", ios::out);
 									for (int i = 0; i < listaZajec.size(); i++)
@@ -473,7 +487,7 @@ int main() {
 										plikAktualizuj << endl;
 									}
 									plikAktualizuj.close();
-									klient.getIndeksyZajec().push_back(wybrany - 48 - 1);
+									klient.getIndeksyZajec().push_back(wybrany - 48);
 									do
 									{
 										system("cls");
@@ -546,7 +560,7 @@ int main() {
 						pracownik.getKontoPracownika().zarzadzajCennikiem(cennik);
 						break;
 					case '2':
-						pracownik.getKontoPracownika().zarzadzajKontami();
+						pracownik.getKontoPracownika().zarzadzajKontami(cennik);
 						break;
 					case '3':
 						pracownik.getKontoPracownika().zarzadzajHarmoZajec(harmonogram);

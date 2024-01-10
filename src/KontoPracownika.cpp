@@ -299,8 +299,553 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 	}
 }
 
-void KontoPracownika::zarzadzajKontami()
+void KontoPracownika::zarzadzajKontami(Cennik cennik)
 {
+	char wybor;
+	char wybrany;
+	vector<string> konta;
+	fstream plik;
+	string imie;
+	string nazwisko;
+	string telefon;
+	string email;
+	string login;
+	string haslo;
+	int typKarnetu;
+	int uprawnienia;
+	time_t ostatniaPlatnosc;
+
+	string wiersz;
+	string szukanyLogin;
+
+	string noweImie;
+	string noweNazwisko;
+	string nowyTelefon;
+	string nowyEmail;
+	string nowyLogin;
+	string noweHaslo;
+	int nowyTypKarnetu;
+	int noweUprawnienia;
+	time_t nowaOstatniaPlatnosc;
+	bool znaleziony;
+	do
+	{
+		system("cls");
+		cout << " 1) Dodaj Konto" << endl;
+		cout << " 2) Usun Konto" << endl;
+		cout << " 3) Modyfikuj Konto" << endl;
+		cout << "ESC) Powrot" << endl;
+		wybor = _getch();
+	} while (wybor != 27 && wybor != '1' && wybor != '2' && wybor != '3');
+	switch (wybor)
+	{
+	case '1':
+		cout << "======== Dodawanie konta ========" << endl;
+		cout << "Podaj imie: ";
+		cin >> imie;
+		cout << "Podaj nazwisko: ";
+		cin >> nazwisko;
+		cout << "Podaj telefon: ";
+		cin >> telefon;
+		cout << "Podaj email: ";
+		cin >> email;
+		tworzenieLoginu:
+		cout << "Utworz login: ";
+		cin >> login;
+
+		plik.open("src/Konta.txt", ios::in);
+		while (plik >> szukanyLogin) {
+			getline(plik, wiersz);
+			if (login == szukanyLogin) {
+				cout << "Podany login jest juz wykorzystany!" << endl;
+				plik.close();
+				goto tworzenieLoginu;
+			}
+		}
+		plik.close();
+
+		cout << "Utworz haslo: ";
+		char znak;
+		haslo = "";
+		while ((znak = _getch()) != '\r') {
+			if (znak == '\b') {
+				if (!haslo.empty()) {
+					haslo.pop_back();
+					cout << "\b \b";
+				}
+			}
+			else {
+				haslo.push_back(znak);
+				cout << '*';
+			}
+		}
+		do
+		{
+			system("cls");
+			cout << "Czy chcesz dodac karnet do konta?" << endl;
+			cout << " T) TAK" << endl;
+			cout << " N) NIE" << endl;
+			wybor = _getch();
+		} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+		if (wybor == 'T' || wybor == 't')
+		{
+			do
+			{
+				system("cls");
+				cennik.przegladajCennik();
+				cout << "Ktory karnet chcesz dodac do konta?" << endl;
+				cout << "ESC) Anuluj dodawanie karnetu" << endl;
+				wybrany = _getch();
+			} while (wybrany != 27 && (wybrany < '1' || wybrany > cennik.getTypyKarnetow().size() + 48));
+			if (wybrany == 27)
+			{
+				typKarnetu = 0;
+			}
+			else
+			{
+				typKarnetu = wybrany - 48;
+			}
+		}
+		else
+		{
+			typKarnetu = 0;
+		}
+		do
+		{
+			system("cls");
+			cout << "Czy karnet ma byc aktualny?" << endl;
+			cout << " T) TAK" << endl;
+			cout << " N) NIE" << endl;
+			wybor = _getch();
+		} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+		if (wybor == 'T' || wybor == 't')
+		{
+			ostatniaPlatnosc = time(0);
+		}
+		else
+		{
+			ostatniaPlatnosc = 0;
+		}
+		do
+		{
+			system("cls");
+			cout << "Jakie uprawnienia ma miec konto?" << endl;
+			cout << " K) Klient" << endl;
+			cout << " P) Pracownik" << endl;
+			wybor = _getch();
+		} while (wybor != 'k' && wybor != 'K' && wybor != 'p' && wybor != 'P');
+		if (wybor == 'k' || wybor == 'K')
+		{
+			uprawnienia = 0;
+		}
+		else
+		{
+			uprawnienia = 1;
+		}
+		do
+		{
+			system("cls");
+			cout << "Czy na pewno chcesz dodac konto: " << endl;
+			cout << "================================" << endl;
+			cout << imie << " " << nazwisko << endl;
+			cout << "Nr tel: " << telefon << endl;
+			cout << "Email: " << email << endl;
+			cout << "Login: " << login << endl;
+			cout << "Haslo: " << haslo << endl;
+			cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+			cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+			if (typKarnetu && ostatniaPlatnosc)
+			{
+				cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+			}
+			cout << "================================" << endl;
+			cout << " T) TAK" << endl;
+			cout << " N) NIE" << endl;
+			wybor = _getch();
+		} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+		if (wybor == 'T' || wybor == 't')
+		{
+			konta.clear();
+			plik.open("src/Konta.txt", ios::in);
+			while (getline(plik, wiersz)) {
+				konta.push_back(wiersz);
+			}
+			plik.close();
+			konta.push_back(login + '\t' + haslo + '\t' + imie + '\t' + nazwisko + '\t' + telefon + '\t' + email + '\t' + to_string(typKarnetu)
+				+ '\t' + to_string(uprawnienia) + '\t' + to_string(ostatniaPlatnosc));
+			plik.open("src/Konta.txt", ios::out);
+			for (int i = 0; i < konta.size(); i++)
+			{
+				plik << konta[i] << endl;
+			}
+			plik.close();
+		}
+		break;
+	case '2':
+		cout << "Podaj login konta do usuniecia" << endl;
+		cin >> szukanyLogin;
+		znaleziony = false;
+		plik.open("src/Konta.txt", ios::in);
+		while (plik >> login) {
+			getline(plik, wiersz);
+			if (login == szukanyLogin) {
+				znaleziony = true;
+			}
+		}
+		plik.close();
+		if (znaleziony)
+		{
+			do
+			{
+				system("cls");
+				cout << "Czy na pewno chcesz trwale usunac konto " << szukanyLogin << "?" << endl;
+				cout << "T) TAK" << endl;
+				cout << "N) NIE" << endl;
+				wybor = _getch();
+			} while (wybor != 't' && wybor != 'T' && wybor != 'n' && wybor != 'N');
+			if (wybor == 't' || wybor == 'T')
+			{
+				plik.open("src/Konta.txt", ios::in);
+				konta.clear();
+				while (getline(plik, wiersz))
+				{
+					istringstream strumien(wiersz);
+					strumien >> login;
+					if (login != szukanyLogin)
+					{
+						konta.push_back(wiersz);
+					}
+				}
+				plik.close();
+				plik.open("src/Konta.txt", ios::out);
+				for (int i = 0; i < konta.size(); i++)
+				{
+					plik << konta[i] << endl;
+				}
+				plik.close();
+			}
+		}
+		else
+		{
+			do
+			{
+				cout << "Konto o podanym loginie nie istnieje!" << endl;
+				cout << "Wcisnij dowolny przycisk";
+			} while (!_getch());
+		}
+		break;
+	case '3':
+		cout << "Podaj login konta do zmiany" << endl;
+		cin >> szukanyLogin;
+		znaleziony = false;
+		plik.open("src/Konta.txt", ios::in);
+		while (plik >> login) {
+			getline(plik, wiersz);
+			if (login == szukanyLogin) {
+				znaleziony = true;
+			}
+		}
+		plik.close();
+		if (znaleziony)
+		{
+			konta.clear();
+			plik.open("src/Konta.txt", ios::in);
+			while (getline(plik, wiersz)) {
+				konta.push_back(wiersz);
+			}
+			plik.close();
+			for (int i = 0; i < konta.size(); i++)
+			{
+				if (czyZawiera(konta[i], szukanyLogin))
+				{
+					// tutaj wszystkie zmiany co do konta
+					wiersz = konta[i];
+					istringstream strumien(wiersz);
+					strumien >> login >> haslo >> imie >> nazwisko >> telefon >> email >> typKarnetu >> uprawnienia >> ostatniaPlatnosc;
+					system("cls");
+					cout << "======== Zmieniane konto ========" << endl;
+					cout << imie << " " << nazwisko << endl;
+					cout << "Nr tel: " << telefon << endl;
+					cout << "Email: " << email << endl;
+					cout << "Login: " << login << endl;
+					cout << "Haslo: " << haslo << endl;
+					cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+					cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+					if (typKarnetu && ostatniaPlatnosc)
+					{
+						cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+					}
+					cout << "=================================" << endl;
+					cout << "Podaj zmienione imie" << endl;
+					cin >> noweImie;
+					
+					system("cls");
+					cout << "======== Zmieniane konto ========" << endl;
+					cout << imie << " " << nazwisko << endl;
+					cout << "Nr tel: " << telefon << endl;
+					cout << "Email: " << email << endl;
+					cout << "Login: " << login << endl;
+					cout << "Haslo: " << haslo << endl;
+					cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+					cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+					if (typKarnetu && ostatniaPlatnosc)
+					{
+						cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+					}
+					cout << "=================================" << endl;
+					cout << "Podaj zmienione nazwisko" << endl;
+					cin >> noweNazwisko;
+
+					system("cls");
+					cout << "======== Zmieniane konto ========" << endl;
+					cout << imie << " " << nazwisko << endl;
+					cout << "Nr tel: " << telefon << endl;
+					cout << "Email: " << email << endl;
+					cout << "Login: " << login << endl;
+					cout << "Haslo: " << haslo << endl;
+					cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+					cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+					if (typKarnetu && ostatniaPlatnosc)
+					{
+						cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+					}
+					cout << "=================================" << endl;
+					cout << "Podaj zmieniony nr telefonu" << endl;
+					cin >> nowyTelefon;
+
+					system("cls");
+					cout << "======== Zmieniane konto ========" << endl;
+					cout << imie << " " << nazwisko << endl;
+					cout << "Nr tel: " << telefon << endl;
+					cout << "Email: " << email << endl;
+					cout << "Login: " << login << endl;
+					cout << "Haslo: " << haslo << endl;
+					cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+					cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+					if (typKarnetu && ostatniaPlatnosc)
+					{
+						cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+					}
+					cout << "=================================" << endl;
+					cout << "Podaj zmieniony email" << endl;
+					cin >> nowyEmail;
+
+					system("cls");
+					cout << "======== Zmieniane konto ========" << endl;
+					cout << imie << " " << nazwisko << endl;
+					cout << "Nr tel: " << telefon << endl;
+					cout << "Email: " << email << endl;
+					cout << "Login: " << login << endl;
+					cout << "Haslo: " << haslo << endl;
+					cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+					cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+					if (typKarnetu && ostatniaPlatnosc)
+					{
+						cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+					}
+					cout << "=================================" << endl;
+					nowyLogin:
+					cout << "Podaj zmieniony login" << endl;
+					cin >> nowyLogin;
+
+					if(login != nowyLogin) 
+					{ 
+						plik.open("src/Konta.txt", ios::in);
+						while (plik >> szukanyLogin) {
+							getline(plik, wiersz);
+							if (nowyLogin == szukanyLogin) {
+								cout << "Podany login jest juz wykorzystany!" << endl;
+								plik.close();
+								goto nowyLogin;
+							}
+						}
+						plik.close();
+					}
+
+					system("cls");
+					cout << "======== Zmieniane konto ========" << endl;
+					cout << imie << " " << nazwisko << endl;
+					cout << "Nr tel: " << telefon << endl;
+					cout << "Email: " << email << endl;
+					cout << "Login: " << login << endl;
+					cout << "Haslo: " << haslo << endl;
+					cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+					cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+					if (typKarnetu && ostatniaPlatnosc)
+					{
+						cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+					}
+					cout << "=================================" << endl;
+					cout << "Podaj zmienione haslo" << endl;
+					cin >> noweHaslo;
+
+					do
+					{
+						system("cls");
+						cout << "======== Zmieniane konto ========" << endl;
+						cout << imie << " " << nazwisko << endl;
+						cout << "Nr tel: " << telefon << endl;
+						cout << "Email: " << email << endl;
+						cout << "Login: " << login << endl;
+						cout << "Haslo: " << haslo << endl;
+						cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+						cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+						if (typKarnetu && ostatniaPlatnosc)
+						{
+							cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+						}
+						cout << "=================================" << endl;
+						cout << "Jakie uprawnienia ma miec to konto?" << endl;
+						cout << " K) Klient" << endl;
+						cout << " P) Pracownik" << endl;
+						wybor = _getch();
+					} while (wybor != 'k' && wybor != 'K' && wybor != 'p' && wybor != 'P');
+					if (wybor == 'k' || wybor == 'K')
+					{
+						noweUprawnienia = 0;
+					}
+					else
+					{
+						noweUprawnienia = 1;
+					}
+					
+					do
+					{
+						system("cls");
+						cout << "======== Zmieniane konto ========" << endl;
+						cout << imie << " " << nazwisko << endl;
+						cout << "Nr tel: " << telefon << endl;
+						cout << "Email: " << email << endl;
+						cout << "Login: " << login << endl;
+						cout << "Haslo: " << haslo << endl;
+						cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+						cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+						if (typKarnetu && ostatniaPlatnosc)
+						{
+							cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+						}
+						cout << "=================================" << endl;
+						cout << "Czy chcesz dodac karnet do konta?" << endl;
+						cout << " T) TAK" << endl;
+						cout << " N) NIE" << endl;
+						wybor = _getch();
+					} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+					if (wybor == 'T' || wybor == 't')
+					{
+						do
+						{
+							system("cls");
+							cennik.przegladajCennik();
+							cout << "Ktory karnet chcesz dodac do konta?" << endl;
+							cout << "ESC) Anuluj dodawanie karnetu" << endl;
+							wybrany = _getch();
+						} while (wybrany != 27 && (wybrany < '1' || wybrany > cennik.getTypyKarnetow().size() + 48));
+						if (wybrany == 27)
+						{
+							nowyTypKarnetu = 0;
+						}
+						else
+						{
+							nowyTypKarnetu = wybrany - 48;
+							do
+							{
+								system("cls");
+								cout << "======== Zmieniane konto ========" << endl;
+								cout << imie << " " << nazwisko << endl;
+								cout << "Nr tel: " << telefon << endl;
+								cout << "Email: " << email << endl;
+								cout << "Login: " << login << endl;
+								cout << "Haslo: " << haslo << endl;
+								cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+								cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+								if (typKarnetu && ostatniaPlatnosc)
+								{
+									cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+								}
+								cout << "=================================" << endl;
+								cout << "Czy karnet ma byc aktualny?" << endl;
+								cout << " T) TAK" << endl;
+								cout << " N) NIE" << endl;
+								wybor = _getch();
+							} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+							if (wybor == 'T' || wybor == 't')
+							{
+								nowaOstatniaPlatnosc = time(0);
+							}
+							else
+							{
+								nowaOstatniaPlatnosc = 0;
+							}
+						}
+					}
+					else
+					{
+						nowyTypKarnetu = 0;
+						nowaOstatniaPlatnosc = 0;
+					}
+					do
+					{
+						system("cls");
+						cout << "Czy chcesz zmienic konto:" << endl;
+						cout << "========== Aktualne konto ==========" << endl;
+						cout << imie << " " << nazwisko << endl;
+						cout << "Nr tel: " << telefon << endl;
+						cout << "Email: " << email << endl;
+						cout << "Login: " << login << endl;
+						cout << "Haslo: " << haslo << endl;
+						cout << "Poziom uprawnien: " << (uprawnienia ? "Pracownik" : "Klient") << endl;
+						cout << "Karnet: " << cennik.getTypyKarnetow()[typKarnetu].getNazwa() << endl;
+						if (typKarnetu && ostatniaPlatnosc)
+						{
+							cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
+						}
+						cout << "=====================================" << endl;
+						cout << "Na konto:" << endl;
+						cout << "======== Zmodyfikowane konto ========" << endl;
+						cout << noweImie << " " << noweNazwisko << endl;
+						cout << "Nr tel: " << nowyTelefon << endl;
+						cout << "Email: " << nowyEmail << endl;
+						cout << "Login: " << nowyLogin << endl;
+						cout << "Haslo: " << noweHaslo << endl;
+						cout << "Poziom uprawnien: " << (noweUprawnienia ? "Pracownik" : "Klient") << endl;
+						cout << "Karnet: " << cennik.getTypyKarnetow()[nowyTypKarnetu].getNazwa() << endl;
+						if (nowyTypKarnetu && nowaOstatniaPlatnosc)
+						{
+							cout << "Karnet wazny do: " << konwertujTimeT(nowaOstatniaPlatnosc + 2592000) << endl;
+						}
+						cout << "=====================================" << endl;
+						cout << " T) TAK" << endl;
+						cout << " N) NIE" << endl;
+						wybor = _getch();
+					} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+					if (wybor == 'T' || wybor == 't')
+					{
+						// wstawienie zmienionego rekordu na miejsce starego w wektorze
+						konta[i] = nowyLogin + '\t' + noweHaslo + '\t' + noweImie + '\t' + noweNazwisko + '\t' + nowyTelefon + '\t' + nowyEmail + '\t' + to_string(nowyTypKarnetu)
+							+ '\t' + to_string(noweUprawnienia) + '\t' + to_string(nowaOstatniaPlatnosc);
+						// uaktualnienie pliku zawierajacego liste kont
+						plik.open("src/Konta.txt", ios::out);
+						for (int i = 0; i < konta.size(); i++)
+						{
+							plik << konta[i] << endl;
+						}
+						plik.close();
+					}
+				}
+			}
+		}
+		else
+		{
+			do
+			{
+				cout << "Konto o podanym loginie nie istnieje!" << endl;
+				cout << "Wcisnij dowolny przycisk";
+			} while (!_getch());
+		}
+		break;
+	case 27:
+		return;
+	}
 }
 
 void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
@@ -316,7 +861,7 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 		string prowadzacy;
 		string dataString;
 		vector<string> loginy = {};
-		
+
 		do
 		{
 			system("cls");
@@ -340,8 +885,8 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 			}
 			system("cls");
 			cout << "Podaj opis zajec: ";
-			getline(cin, opis);
-			opis = spacjeNaPodlogi(opis);
+			getline(cin >> ws, opis);
+
 			system("cls");
 			cout << "Podaj liczbe miejsc: ";
 			while (!(cin >> liczbaMiejsc) || liczbaMiejsc < 0)
@@ -362,8 +907,13 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 			}
 			system("cls");
 			cout << "Podaj godzine i date zajec w formacie (godziny minuty dzien miesiac rok)" << endl;
-			
 			getline(cin >> ws, dataString);
+
+			while(dataString.size() != 14 || !dobryFormat(dataString))
+			{
+				cout << "Podaj poprawna date" << endl;
+				getline(cin >> ws, dataString);
+			}
 			dataZajec = parsujDate(dataString);
 
 			system("cls");
@@ -387,7 +937,7 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 			} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
 			if (wybor == 'T' || wybor == 't')
 			{
-				harmonogram.dodajZajecia(Zajecia(nazwa, spacjeNaPodlogi(opis), dataZajec, czasTrwania, liczbaMiejsc, prowadzacy, loginy));
+				harmonogram.dodajZajecia(Zajecia(nazwa, opis, dataZajec, czasTrwania, liczbaMiejsc, prowadzacy, loginy));
 				fstream plikAktualizuj;
 				plikAktualizuj.open("src/ListaZajec.txt", ios::out);
 				for (int i = 0; i < harmonogram.getListaZajec().size(); i++)
@@ -593,7 +1143,6 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 			break;
 		case 27:
 			return;
-			break;
 		}
 	}
 }
@@ -637,7 +1186,7 @@ time_t parsujDate(string& dataStr) {
 	}
 
 	// Ustawienie pól struktury tm
-	strukturaCzasu.tm_hour = godzina;
+	strukturaCzasu.tm_hour = godzina-1;
 	strukturaCzasu.tm_min = minuta;
 	strukturaCzasu.tm_sec = 0;
 	strukturaCzasu.tm_mday = dzien;
@@ -650,8 +1199,83 @@ time_t parsujDate(string& dataStr) {
 	// Sprawdzenie poprawnoœci przekszta³cenia
 	if (znacznikCzasu == -1) {
 		cerr << "B³¹d przekszta³cania daty na znacznik czasu." << endl;
-		return -1; // Zwrócenie b³êdu
+		return -1;
 	}
 
-	return znacznikCzasu; // Zwrócenie znacznika czasu
+	return znacznikCzasu;
+}
+
+bool dobryFormat(string data)		// funkcja ma za zadanie sprawdzic czy podana data w stringu zgadza sie z formatem hh mm dd mm yy,
+{									// ponadto sprawdza czy podane wartosci godzin i dni miesiaca sa poprawne wzgledem rzeczywistosci np. miesiac ma maks. 31 dni
+	for (int i = 0; i < data.size(); i++)
+	{
+		if ((i % 3) + 1 == 3 && data[i] != ' ')
+		{
+			return false;
+		}
+	}
+	if (data[0] < '0' || data[0] > '2')
+	{
+		return false;
+	}
+	if (data[0] == '2' && (data[1] < '0' || data[1] > '3'))
+	{
+		return false;
+	}
+	if (data[3] < '0' || data[3] > '5')
+	{
+		return false;
+	}
+	if (data[6] < '0' || data[6] > '3')
+	{
+		return false;
+	}
+	if (data[6] == '3' && (data[7] < '0' || data[7] > '1'))
+	{
+		return false;
+	}
+	if(data[9] < '0' || data[9] > '1')
+	{
+		return false;
+	}
+	if (data[9] == '1' && (data[10] < '0' || data[10] > '2'))
+	{
+		return false;
+	}
+	if (data[6] == '3' && data[7] == '1')
+	{
+		if (data[9] == '0' && data[10] == '4')
+		{
+			return false;
+		}
+		if (data[9] == '0' && data[10] == '6')
+		{
+			return false;
+		}
+		if (data[9] == '0' && data[10] == '6')
+		{
+			return false;
+		}
+		if (data[9] == '0' && data[10] == '9')
+		{
+			return false;
+		}
+		if (data[9] == '1' && data[10] == '1')
+		{
+			return false;
+		}
+	}
+	if (data[9] == '0' && data[10] == '2')
+	{
+		if((data[6] == '2' && (data[7] < '0' || data[7] > '8')) || (data[6] == '3'))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool czyZawiera(string tekst, string podciag) {
+	// Jeœli find zwraca std::string::npos, to podci¹g nie istnieje w tekœcie
+	return tekst.find(podciag) != string::npos;
 }
