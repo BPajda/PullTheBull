@@ -6,7 +6,6 @@ using namespace std;
 
 class Zajecia
 {
-public:
 	string prowadzacy;
 	vector<string> loginyUczestnikow;
 	string nazwa;
@@ -15,6 +14,13 @@ public:
 	int czasTrwania;
 	int liczbaMiejsc;
 public:
+	void setProwadzacy(string prowadzacy);
+	void setLoginyUczestnikow(vector<string> loginyUczestnikow);
+	void setNazwa(string nazwa);
+	void setOpis(string opis);
+	void setDataZajec(time_t dataZajec);
+	void setCzasTrwania(int czasTrwania);
+	void setLiczbaMiejsc(int liczbaMiejsc);
 
 	Zajecia(string nazwa, string opis, time_t dataZajec, int czasTrwania, int liczbaMiejsc, string prowadzacy, vector<string> loginyUczestnikow);
 	Zajecia();

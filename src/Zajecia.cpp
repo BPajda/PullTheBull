@@ -1,11 +1,11 @@
-#include "Zajecia.h"
+ï»¿#include "Zajecia.h"
 #include <iostream>
 #include <sstream>
 #include <iomanip>
 
 using namespace std;
 
-// Konstruktor inicjalizuj¹cy obiekt Zajecia z podanymi danymi
+// Konstruktor inicjalizujÂ¹cy obiekt Zajecia z podanymi danymi
 Zajecia::Zajecia(string nazwa, string opis, time_t dataZajec, int czasTrwania, int liczbaMiejsc, string prowadzacy, vector<string> loginyUczestnikow)
 {
     this->prowadzacy = prowadzacy;
@@ -17,7 +17,7 @@ Zajecia::Zajecia(string nazwa, string opis, time_t dataZajec, int czasTrwania, i
     this->loginyUczestnikow = loginyUczestnikow;
 }
 
-// Konstruktor domyœlny
+// Konstruktor domyÅ“lny
 Zajecia::Zajecia()
 {
 }
@@ -27,49 +27,49 @@ Zajecia::~Zajecia()
 {
 }
 
-// Metoda zwracaj¹ca prowadz¹cego zajêcia
+// Metoda zwracajÂ¹ca prowadzÂ¹cego zajÃªcia
 string Zajecia::getProwadzacy()
 {
     return this->prowadzacy;
 }
 
-// Metoda zwracaj¹ca wektor loginów uczestników zajêæ
+// Metoda zwracajÂ¹ca wektor loginÃ³w uczestnikÃ³w zajÃªÃ¦
 vector<string>& Zajecia::getLoginyUczestnikow()
 {
     return this->loginyUczestnikow;
 }
 
-// Metoda zwracaj¹ca nazwê zajêæ
+// Metoda zwracajÂ¹ca nazwÃª zajÃªÃ¦
 string Zajecia::getNazwa()
 {
     return this->nazwa;
 }
 
-// Metoda zwracaj¹ca opis zajêæ
+// Metoda zwracajÂ¹ca opis zajÃªÃ¦
 string Zajecia::getOpis()
 {
     return this->opis;
 }
 
-// Metoda zwracaj¹ca datê zajêæ
+// Metoda zwracajÂ¹ca datÃª zajÃªÃ¦
 time_t Zajecia::getDataZajec()
 {
     return this->dataZajec;
 }
 
-// Metoda zwracaj¹ca czas trwania zajêæ
+// Metoda zwracajÂ¹ca czas trwania zajÃªÃ¦
 int Zajecia::getCzasTrwania()
 {
     return this->czasTrwania;
 }
 
-// Metoda zwracaj¹ca liczbê miejsc na zajêciach
+// Metoda zwracajÂ¹ca liczbÃª miejsc na zajÃªciach
 int Zajecia::getLiczbaMiejsc()
 {
     return this->liczbaMiejsc;
 }
 
-// Metoda wyœwietlaj¹ca informacje o zajêciach
+// Metoda wyÅ“wietlajÂ¹ca informacje o zajÃªciach
 void Zajecia::info()
 {
     cout << this->nazwa << endl;
@@ -81,7 +81,7 @@ void Zajecia::info()
     cout << "Prowadzacy: " << this->prowadzacy << endl << endl;
 }
 
-// Funkcja wstawiaj¹ca nowe linie do tekstu, aby nie przekracza³ okreœlonej d³ugoœci linii
+// Funkcja wstawiajÂ¹ca nowe linie do tekstu, aby nie przekraczaÂ³ okreÅ“lonej dÂ³ugoÅ“ci linii
 string wstawNowaLinie(const string& tekst, size_t dlugoscLinii) {
     string wynik;
     istringstream strumien(tekst);
@@ -91,7 +91,7 @@ string wstawNowaLinie(const string& tekst, size_t dlugoscLinii) {
 
     while (strumien >> slowo) {
         if (aktualnaDlugosc + slowo.length() <= dlugoscLinii) {
-            // Dodaj s³owo do bie¿¹cej linii
+            // Dodaj sÂ³owo do bieÂ¿Â¹cej linii
             if (!wynik.empty()) {
                 wynik += ' ';
                 aktualnaDlugosc++;
@@ -100,7 +100,7 @@ string wstawNowaLinie(const string& tekst, size_t dlugoscLinii) {
             aktualnaDlugosc += slowo.length();
         }
         else {
-            // Rozpocznij now¹ liniê z bie¿¹cym s³owem
+            // Rozpocznij nowÂ¹ liniÃª z bieÂ¿Â¹cym sÂ³owem
             wynik += '\n' + slowo;
             aktualnaDlugosc = slowo.length();
         }
@@ -109,7 +109,7 @@ string wstawNowaLinie(const string& tekst, size_t dlugoscLinii) {
     return wynik;
 }
 
-// Funkcja konwertuj¹ca time_t na formatowany napis daty i czasu
+// Funkcja konwertujÂ¹ca time_t na formatowany napis daty i czasu
 string konwertujTimeT(time_t czas) {
     tm czasStruktura;
     localtime_s(&czasStruktura, &czas);
@@ -118,3 +118,39 @@ string konwertujTimeT(time_t czas) {
 
     return ss.str();
 }
+// Setter dla prowadzÄ…cego
+void Zajecia::setProwadzacy(string prowadzacy)
+{
+    this->prowadzacy = prowadzacy;
+}
+//Setter dla loginÃ³w uczestnikÃ³w
+void Zajecia::setLoginyUczestnikow(vector<string> loginyUczestnikow)
+{
+    this->loginyUczestnikow = loginyUczestnikow;
+}
+// Setter dla nazwy
+void Zajecia::setNazwa(string nazwa)
+{
+    this->nazwa = nazwa;
+}
+// Setter dla opisu
+void Zajecia::setOpis(string opis)
+{
+    this->opis = opis;
+}
+// Setter dla daty zajÄ™Ä‡
+void Zajecia::setDataZajec(time_t dataZajec)
+{
+    this->dataZajec = dataZajec;
+}
+//Setter dla czasu trwania
+void Zajecia::setCzasTrwania(int czasTrwania)
+{
+    this->czasTrwania = czasTrwania;
+}
+//Setter dla liczby miejsc
+void Zajecia::setLiczbaMiejsc(int liczbaMiejsc)
+{
+    this->liczbaMiejsc = liczbaMiejsc;
+}
+
