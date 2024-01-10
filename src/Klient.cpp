@@ -52,3 +52,17 @@ KontoUzytkownika Klient::getKontoUzytkownika()
 {
 	return this->kontoUzytkownika;
 }
+
+string Klient::getImie() {
+	return this->imie;
+}
+string Klient::getNazwisko() {
+	return this->nazwisko;
+
+}
+string Klient::getTelefon() {
+	return this->telefon;
+}
+string Klient::getEmail() {
+	return this->email;
+}

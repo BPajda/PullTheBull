@@ -28,6 +28,10 @@ namespace GymAppTests
 
 			Assert::IsTrue(karnet1.sprawdzWaznosc());
 
+			karnet1.ostatniaPlatnosc = 3592000;
+			Assert::IsFalse(karnet1.sprawdzWaznosc());
+
+
 		}
 		TEST_METHOD(oplacKarnet)
 		{
@@ -41,43 +45,80 @@ namespace GymAppTests
 		TEST_METHOD(KarnetConstr)
 		{
 			Karnet karnet3;
-			karnet3.ostatniaPlatnosc = time(0);
-			time_t czas = 0;
+			TypKarnetu typkarnetu1;
+			time_t czas = time(0);
+			karnet3 = Karnet(czas, typkarnetu1);
 			
 			Assert::AreEqual(karnet3.ostatniaPlatnosc, czas);
+			Assert::AreEqual(karnet3.typkarnetu.nazwa, typkarnetu1.nazwa);
+			Assert::AreEqual(karnet3.typkarnetu.cena, typkarnetu1.cena);
+			Assert::AreEqual(karnet3.typkarnetu.open, typkarnetu1.open);
+			Assert::AreEqual(karnet3.typkarnetu.zajecia, typkarnetu1.zajecia);
 
+		}
+		TEST_METHOD(getTypKarnetu)
+		{
+			Karnet karnet4;
+			TypKarnetu typKarnetu4;
+			karnet4.typkarnetu = typKarnetu4;
+
+			Assert::AreEqual(karnet4.typkarnetu.nazwa, karnet4.getTypKarnetu().nazwa);
+			Assert::AreEqual(karnet4.typkarnetu.cena, karnet4.getTypKarnetu().cena);
+			Assert::AreEqual(karnet4.typkarnetu.open, karnet4.getTypKarnetu().open);
+			Assert::AreEqual(karnet4.typkarnetu.zajecia, karnet4.getTypKarnetu().zajecia);
+		}
+		TEST_METHOD(getOstatniaPlatnosc)
+		{
+			Karnet karnet5;
+			karnet5.ostatniaPlatnosc = time(0);
+
+			Assert::AreEqual(karnet5.ostatniaPlatnosc, karnet5.getOstatniaPlatnosc());
 		}
 
 	};
 	TEST_CLASS(KlientClass)
 	{
-		TEST_METHOD(wpiszDane)
-		{
-			Klient klient1;
-			const char* imie = "adam";
-			const char* nazwisko= "krawiec";
-			const char* telefon= "";
-			const char* email= "";
-
-
-			klient1.wpiszDane("Jan", "Kowalski", "444444444", "j.kowal@gmail.com");
-			Assert::AreEqual("Jan", imie);
-			Assert::AreEqual("Kowalski", nazwisko);
-			Assert::AreEqual("444444444", telefon);
-			Assert::AreEqual("j.kowal@gmail.com", email);
-		}
 		TEST_METHOD(KlientConstr)
 		{
-			Klient klient2;
-			const char* imie = "adam";
-			const char* nazwisko = "krawiec";
-			const char* telefon = "";
-			const char* email = "";
+			Klient klient1;
+			string imie = "Jan";
+			string nazwisko= "Kowalski";
+			string telefon= "444444444";
+			string email= "j.kowal@gmail.com";
 
-			Assert::AreEqual("Jan", imie);
-			Assert::AreEqual("Kowalski", nazwisko);
-			Assert::AreEqual("444444444", telefon);
-			Assert::AreEqual("j.kowal@gmail.com", email);
+
+			klient1 = Klient("Jan", "Kowalski", "444444444", "j.kowal@gmail.com");
+			Assert::AreEqual(klient1.getImie(), imie);
+			Assert::AreEqual(klient1.getNazwisko(), nazwisko);
+			Assert::AreEqual(klient1.getTelefon(), telefon);
+			Assert::AreEqual(klient1.getEmail(), email);
+		}
+		TEST_METHOD(getKarnet)
+		{
+			Klient klient2;
+			Karnet karnet1;
+			klient2.setKarnet(karnet1);
+
+			Assert::AreEqual(karnet1.typkarnetu, klient2.getKarnet().typkarnetu);
+			Assert::AreEqual(karnet1.ostatniaPlatnosc, klient2.getKarnet().ostatniaPlatnosc);
+		}
+		TEST_METHOD(getKontoUzytkownika)
+		{
+			Klient klient2;
+			KontoUzytkownika konto1;
+			klient2.setKontoUzytkownika(konto1);
+
+			Assert::AreEqual(konto1.getLogin(), klient2.getKontoUzytkownika().getLogin());
+			
+		}
+		TEST_METHOD(getIndeksyZajec)
+		{
+			Klient klient2;
+			vector <int> indeksy = { 2, 5 };
+			klient2.setIndeksyZajec(indeksy);
+
+			Assert::AreEqual(indeksy[0], klient2.getIndeksyZajec()[0]);
+			Assert::AreEqual(indeksy[1], klient2.getIndeksyZajec()[1]);
 		}
 
 	};
