@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include "Pracownik.h"
 #include <vector>
 
 using namespace std;
@@ -16,7 +15,6 @@ public:
 	int czasTrwania;
 	int liczbaMiejsc;
 public:
-	void modyfikujZajecia();
 
 	Zajecia(string nazwa, string opis, time_t dataZajec, int czasTrwania, int liczbaMiejsc, string prowadzacy, vector<string> loginyUczestnikow);
 	Zajecia();
