@@ -19,6 +19,7 @@ public:
 	~HarmonogramZajec();
 
 	vector<Zajecia>& getListaZajec();
+	void setListaZajec(vector<Zajecia> listaZajec);
 };
 
 string wstawNowaLinie(const string& tekst, size_t dlugoscLinii);

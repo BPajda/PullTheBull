@@ -82,3 +82,9 @@ Cennik::~Cennik()
 vector<TypKarnetu>& Cennik::getTypyKarnetow() {
 	return this->typyKarnetow;
 }
+
+// Setter dla listy typów karnetów
+void Cennik::setTypyKarnetow(vector<TypKarnetu> typyKarnetow)
+{
+	this->typyKarnetow = typyKarnetow;
+}

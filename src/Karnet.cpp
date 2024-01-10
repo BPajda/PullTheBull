@@ -55,6 +55,18 @@ time_t Karnet::getOstatniaPlatnosc()
 	return this->ostatniaPlatnosc;
 }
 
+// Setter dla ostatniej p³atnoœci za karnet
+void Karnet::setOstatniaPlatnosc(time_t ostatniaPlatnosc)
+{
+	this->ostatniaPlatnosc = ostatniaPlatnosc;
+}
+
+// Setter dla typu karnetu
+void Karnet::setTypKarnetu(TypKarnetu typKarnetu)
+{
+	this->typkarnetu = typKarnetu;
+}
+
 // Wyœwietl informacje o karnecie
 void Karnet::wyswietlKarnet()
 {

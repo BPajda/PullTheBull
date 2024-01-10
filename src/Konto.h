@@ -8,7 +8,6 @@ class Konto
 protected:
     string login;
     string haslo;
-    string IDKonta;
 public:
     Konto();
     ~Konto();

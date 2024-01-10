@@ -1271,10 +1271,6 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 	}
 }
 
-void KontoPracownika::wpiszDaneLogowania(string login, string haslo)
-{
-}
-
 // Konstruktor z parametrami
 KontoPracownika::KontoPracownika(string login, string haslo)
 {
@@ -1296,6 +1292,24 @@ KontoPracownika::~KontoPracownika()
 string KontoPracownika::getLogin()
 {
 	return this->login;
+}
+
+// Getter zwracaj¹cy has³o pracownika
+string KontoPracownika::getHaslo()
+{
+	return this->haslo;
+}
+
+// Setter ustawiaj¹cy login pracownika
+void KontoPracownika::setLogin(string login)
+{
+	this->login = login;
+}
+
+// Setter ustawiaj¹cy haslo pracownika
+void KontoPracownika::setHaslo(string haslo)
+{
+	this->haslo = haslo;
 }
 
 // Funkcja konwertuj¹ca datê wpisan¹ w odpowiednim formacie w stringu, na datê w typie time_t
