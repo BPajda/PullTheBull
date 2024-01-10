@@ -3,9 +3,28 @@
 
 using namespace std;
 
-// Funkcja do wprowadzania danych klienta (niezaimplementowana w kodzie)
-void Klient::wpiszDane(string imie, string nazwisko, string telefon, string email)
+// Setter ustawiaj¹cy imiê klienta
+void Klient::setImie(string imie)
 {
+	this->imie = imie;
+}
+
+// Setter ustawiaj¹cy nazwisko klienta
+void Klient::setNazwisko(string nazwisko)
+{
+	this->nazwisko = nazwisko;
+}
+
+// Setter ustawiaj¹cy telefon klienta
+void Klient::setTelefon(string telefon)
+{
+	this->telefon = telefon;
+}
+
+// Setter ustawiaj¹cy email klienta
+void Klient::setEmail(string email)
+{
+	this->email = email;
 }
 
 // Konstruktor z parametrami
@@ -63,16 +82,25 @@ KontoUzytkownika Klient::getKontoUzytkownika()
 	return this->kontoUzytkownika;
 }
 
+// Getter dla imienia klienta
 string Klient::getImie() {
 	return this->imie;
 }
-string Klient::getNazwisko() {
-	return this->nazwisko;
 
+// Getter dla nazwiska klienta
+string Klient::getNazwisko() 
+{
+	return this->nazwisko;
 }
-string Klient::getTelefon() {
+
+// Getter dla telefonu klienta
+string Klient::getTelefon() 
+{
 	return this->telefon;
 }
-string Klient::getEmail() {
+
+// Getter dla emaila klienta
+string Klient::getEmail() 
+{
 	return this->email;
 }

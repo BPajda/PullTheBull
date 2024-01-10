@@ -12,13 +12,16 @@ public:
 	void zarzadzajCennikiem(Cennik& cennik);
 	void zarzadzajKontami(Cennik cennik);
 	void zarzadzajHarmoZajec(HarmonogramZajec& harmonogram);
-	void wpiszDaneLogowania(string login, string haslo);
 
 	KontoPracownika(string login, string haslo);
 	KontoPracownika();
 	~KontoPracownika();
 
 	string getLogin();
+	string getHaslo();
+
+	void setLogin(string login);
+	void setHaslo(string haslo);
 };
 
 string podlogiNaSpacje(string tekst);
