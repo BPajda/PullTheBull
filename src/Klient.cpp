@@ -24,7 +24,7 @@ void Klient::setTelefon(string telefon)
 // Setter ustawiaj¹cy email klienta
 void Klient::setEmail(string email)
 {
-	this->email;
+	this->email = email;
 }
 
 // Konstruktor z parametrami

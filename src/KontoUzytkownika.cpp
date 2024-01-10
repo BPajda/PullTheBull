@@ -56,3 +56,23 @@ void KontoUzytkownika::setHaslo(string haslo)
 {
 	this->haslo = haslo;
 }
+
+// Funkcja zamieniaj¹ca podkreœlenia na spacje w tekœcie
+string podlogiNaSpacje(string tekst) {
+	for (char& znak : tekst) {
+		if (znak == '_') {
+			znak = ' ';
+		}
+	}
+	return tekst;
+}
+
+// Funkcja zamieniaj¹ca spacje na podkreœlenia w tekœcie
+string spacjeNaPodlogi(string tekst) {
+	for (char& znak : tekst) {
+		if (znak == ' ') {
+			znak = '_';
+		}
+	}
+	return tekst;
+}
