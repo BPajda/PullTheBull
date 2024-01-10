@@ -6,6 +6,7 @@ using namespace std;
 
 class Zajecia
 {
+public:
 	string prowadzacy;
 	vector<string> loginyUczestnikow;
 	string nazwa;

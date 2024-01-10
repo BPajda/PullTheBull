@@ -1,5 +1,5 @@
-#include <iostream>
 #include "TypKarnetu.h"
+#include <iostream>
 
 using namespace std;
 

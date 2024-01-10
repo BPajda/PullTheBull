@@ -3,13 +3,13 @@
 
 using namespace std;
 
-// Dodaj nowe zajêcia do harmonogramu
+// Dodaj nowe zajï¿½cia do harmonogramu
 void HarmonogramZajec::dodajZajecia(Zajecia zajecia)
 {
 	this->listaZajec.push_back(zajecia);
 }
 
-// Usuñ zajêcia o podanej nazwie z harmonogramu
+// Usuï¿½ zajï¿½cia o podanej nazwie z harmonogramu
 void HarmonogramZajec::usunZajecia(string nazwa)
 {
 	for (int i = 0; i < this->listaZajec.size(); i++)
@@ -21,7 +21,7 @@ void HarmonogramZajec::usunZajecia(string nazwa)
 	}
 }
 
-// Zmieñ istniej¹ce zajêcia na nowe
+// Zmieï¿½ istniejï¿½ce zajï¿½cia na nowe
 void HarmonogramZajec::zmienZajecia(string nazwa, Zajecia zajecia)
 {
 	for (int i = 0; i < this->listaZajec.size(); i++)
@@ -33,7 +33,7 @@ void HarmonogramZajec::zmienZajecia(string nazwa, Zajecia zajecia)
 	}
 }
 
-// Wyœwietl wszystkie zajêcia z harmonogramu
+// Wyï¿½wietl wszystkie zajï¿½cia z harmonogramu
 void HarmonogramZajec::przegladajHarmonogram()
 {
 
@@ -46,7 +46,7 @@ void HarmonogramZajec::przegladajHarmonogram()
 	cout << "=============================" << endl;
 }
 
-// Getter dla wektora z zajêciami w harmonogramie
+// Getter dla wektora z zajï¿½ciami w harmonogramie
 vector<Zajecia>& HarmonogramZajec::getListaZajec()
 {
 	return this->listaZajec;
@@ -58,7 +58,7 @@ HarmonogramZajec::HarmonogramZajec(vector<Zajecia> listaZajec)
 	this->listaZajec = listaZajec;
 }
 
-// Konstruktor domyœlny
+// Konstruktor domyï¿½lny
 HarmonogramZajec::HarmonogramZajec()
 {
 }

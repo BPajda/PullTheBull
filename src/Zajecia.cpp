@@ -8,13 +8,13 @@ using namespace std;
 // Konstruktor inicjalizuj¹cy obiekt Zajecia z podanymi danymi
 Zajecia::Zajecia(string nazwa, string opis, time_t dataZajec, int czasTrwania, int liczbaMiejsc, string prowadzacy, vector<string> loginyUczestnikow)
 {
-	this->prowadzacy = prowadzacy;
-	this->nazwa = nazwa;
-	this->opis = opis;
-	this->dataZajec = dataZajec;
-	this->czasTrwania = czasTrwania;
-	this->liczbaMiejsc = liczbaMiejsc;
-	this->loginyUczestnikow = loginyUczestnikow;
+    this->prowadzacy = prowadzacy;
+    this->nazwa = nazwa;
+    this->opis = opis;
+    this->dataZajec = dataZajec;
+    this->czasTrwania = czasTrwania;
+    this->liczbaMiejsc = liczbaMiejsc;
+    this->loginyUczestnikow = loginyUczestnikow;
 }
 
 // Konstruktor domyœlny
@@ -30,43 +30,43 @@ Zajecia::~Zajecia()
 // Metoda zwracaj¹ca prowadz¹cego zajêcia
 string Zajecia::getProwadzacy()
 {
-	return this->prowadzacy;
+    return this->prowadzacy;
 }
 
 // Metoda zwracaj¹ca wektor loginów uczestników zajêæ
 vector<string>& Zajecia::getLoginyUczestnikow()
 {
-	return this->loginyUczestnikow;
+    return this->loginyUczestnikow;
 }
 
 // Metoda zwracaj¹ca nazwê zajêæ
 string Zajecia::getNazwa()
 {
-	return this->nazwa;
+    return this->nazwa;
 }
 
 // Metoda zwracaj¹ca opis zajêæ
 string Zajecia::getOpis()
 {
-	return this->opis;
+    return this->opis;
 }
 
 // Metoda zwracaj¹ca datê zajêæ
 time_t Zajecia::getDataZajec()
 {
-	return this->dataZajec;
+    return this->dataZajec;
 }
 
 // Metoda zwracaj¹ca czas trwania zajêæ
 int Zajecia::getCzasTrwania()
 {
-	return this->czasTrwania;
+    return this->czasTrwania;
 }
 
 // Metoda zwracaj¹ca liczbê miejsc na zajêciach
 int Zajecia::getLiczbaMiejsc()
 {
-	return this->liczbaMiejsc;
+    return this->liczbaMiejsc;
 }
 
 // Metoda wyœwietlaj¹ca informacje o zajêciach
