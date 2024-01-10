@@ -78,33 +78,47 @@ namespace GymAppTests
 	};
 	TEST_CLASS(KlientClass)
 	{
-		TEST_METHOD(wpiszDane)
-		{
-			Klient klient1;
-			const char* imie = "adam";
-			const char* nazwisko= "krawiec";
-			const char* telefon= "";
-			const char* email= "";
-
-
-			klient1.wpiszDane("Jan", "Kowalski", "444444444", "j.kowal@gmail.com");
-			Assert::AreEqual("Jan", imie);
-			Assert::AreEqual("Kowalski", nazwisko);
-			Assert::AreEqual("444444444", telefon);
-			Assert::AreEqual("j.kowal@gmail.com", email);
-		}
 		TEST_METHOD(KlientConstr)
 		{
-			Klient klient2;
-			const char* imie = "adam";
-			const char* nazwisko = "krawiec";
-			const char* telefon = "";
-			const char* email = "";
+			Klient klient1;
+			string imie = "Jan";
+			string nazwisko= "Kowalski";
+			string telefon= "444444444";
+			string email= "j.kowal@gmail.com";
 
-			Assert::AreEqual("Jan", imie);
-			Assert::AreEqual("Kowalski", nazwisko);
-			Assert::AreEqual("444444444", telefon);
-			Assert::AreEqual("j.kowal@gmail.com", email);
+
+			klient1 = Klient("Jan", "Kowalski", "444444444", "j.kowal@gmail.com");
+			Assert::AreEqual(klient1.getImie(), imie);
+			Assert::AreEqual(klient1.getNazwisko(), nazwisko);
+			Assert::AreEqual(klient1.getTelefon(), telefon);
+			Assert::AreEqual(klient1.getEmail(), email);
+		}
+		TEST_METHOD(getKarnet)
+		{
+			Klient klient2;
+			Karnet karnet1;
+			klient2.setKarnet(karnet1);
+
+			Assert::AreEqual(karnet1.typkarnetu, klient2.getKarnet().typkarnetu);
+			Assert::AreEqual(karnet1.ostatniaPlatnosc, klient2.getKarnet().ostatniaPlatnosc);
+		}
+		TEST_METHOD(getKontoUzytkownika)
+		{
+			Klient klient2;
+			KontoUzytkownika konto1;
+			klient2.setKontoUzytkownika(konto1);
+
+			Assert::AreEqual(konto1.getLogin(), klient2.getKontoUzytkownika().getLogin());
+			
+		}
+		TEST_METHOD(getIndeksyZajec)
+		{
+			Klient klient2;
+			vector <int> indeksy = { 2, 5 };
+			klient2.setIndeksyZajec(indeksy);
+
+			Assert::AreEqual(indeksy[0], klient2.getIndeksyZajec()[0]);
+			Assert::AreEqual(indeksy[1], klient2.getIndeksyZajec()[1]);
 		}
 
 	};

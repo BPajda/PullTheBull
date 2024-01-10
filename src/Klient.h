@@ -19,6 +19,10 @@ public:
 	vector<int>& getIndeksyZajec();
 	Karnet& getKarnet();
 	KontoUzytkownika getKontoUzytkownika();
+	string getImie();
+	string getNazwisko();
+	string getTelefon();
+	string getEmail();
 	Klient(string imie, string nazwisko, string telefon, string email);
 
 	Klient();
