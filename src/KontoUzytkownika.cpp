@@ -33,17 +33,26 @@ void KontoUzytkownika::przegladajZajecia(vector<int> indeksyZajec, vector<Zajeci
 	cout << "=========================" << endl;
 }
 
-// Metoda do wprowadzania danych logowania (puste, poniewa¿ dane s¹ ustawiane w konstruktorze)
-void KontoUzytkownika::wpiszDaneLogowania(string login, string haslo)
-{
-}
-
-void KontoUzytkownika::zarzadzajKontemAdmin(string loginDoZmiany, string hasloDoZmiany)
-{
-}
-
 // Metoda zwracaj¹ca login konta u¿ytkownika
 string KontoUzytkownika::getLogin()
 {
 	return this->login;
+}
+
+// Getter dla has³a konta u¿ytkownika
+string KontoUzytkownika::getHaslo()
+{
+	return this->haslo;
+}
+
+// Setter ustawiaj¹cy login dla konta u¿ytkownika
+void KontoUzytkownika::setLogin(string login)
+{
+	this->login = login;
+}
+
+// Setter ustawiaj¹cy has³o dla konta u¿ytkownika
+void KontoUzytkownika::setHaslo(string haslo)
+{
+	this->haslo = haslo;
 }

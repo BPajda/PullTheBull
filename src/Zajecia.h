@@ -6,7 +6,6 @@ using namespace std;
 
 class Zajecia
 {
-public:
 	string prowadzacy;
 	vector<string> loginyUczestnikow;
 	string nazwa;
@@ -15,7 +14,6 @@ public:
 	int czasTrwania;
 	int liczbaMiejsc;
 public:
-
 	Zajecia(string nazwa, string opis, time_t dataZajec, int czasTrwania, int liczbaMiejsc, string prowadzacy, vector<string> loginyUczestnikow);
 	Zajecia();
 	~Zajecia();
@@ -27,6 +25,7 @@ public:
 	time_t getDataZajec();
 	int getCzasTrwania();
 	int getLiczbaMiejsc();
+
 	void info();
 };
 

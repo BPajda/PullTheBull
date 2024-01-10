@@ -9,12 +9,14 @@ class KontoUzytkownika:Konto
 {
 public:
     void przegladajZajecia(vector<int> indeksyZajec, vector<Zajecia> listaZajec);
-    void wpiszDaneLogowania(string login, string haslo);
-    void zarzadzajKontemAdmin(string loginDoZmiany, string hasloDoZmiany);
+
+    string getLogin();
+    string getHaslo();
+
+    void setLogin(string login);
+    void setHaslo(string haslo);
 
     KontoUzytkownika(string login, string haslo);
     KontoUzytkownika();
     ~KontoUzytkownika();
-
-    string getLogin();
 };

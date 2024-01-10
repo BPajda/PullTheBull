@@ -7,8 +7,8 @@ using namespace std;
 
 class Cennik
 {
-public:
 	vector<TypKarnetu> typyKarnetow;
+public:
 	void dodajKarnet(TypKarnetu nowyTyp);
 	void usunKarnet(string nazwa);
 	void zmienKarnet(string nazwa, TypKarnetu zmienionyKarnet);
@@ -19,4 +19,5 @@ public:
 	~Cennik();
 
 	vector<TypKarnetu>& getTypyKarnetow();
+	void setTypyKarnetow(vector<TypKarnetu> typyKarnetow);
 };
