@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -11,6 +12,7 @@
 
 using namespace std;
 
+// Funkcja sprawdzaj¹ca, czy liczba wystêpuje w wektorze
 bool szukajWektor(vector<int> wektor, int liczba)
 {
 	for (int i = 0; i < wektor.size(); i++)
@@ -23,6 +25,7 @@ bool szukajWektor(vector<int> wektor, int liczba)
 	return false;
 }
 
+// Funkcja zamieniaj¹ca podkreœlenia na spacje w tekœcie
 string podlogiNaSpacje(string tekst) {
 	for (char& znak : tekst) {
 		if (znak == '_') {
@@ -32,6 +35,7 @@ string podlogiNaSpacje(string tekst) {
 	return tekst;
 }
 
+// Funkcja zamieniaj¹ca spacje na podkreœlenia w tekœcie
 string spacjeNaPodlogi(string tekst) {
 	for (char& znak : tekst) {
 		if (znak == ' ') {
@@ -43,21 +47,26 @@ string spacjeNaPodlogi(string tekst) {
 
 int main() {
 
+	// Inicjalizacja plików wejœciowych
 	fstream pliki;
 	string nazwa;
 	int cena;
 	bool open;
 	bool zajecia;
 
+	// Inicjalizacja wektora przechowuj¹cego typy karnetów
 	vector<TypKarnetu> typyKarnetow;
 	int indeksTypuKarnetu;
 	typyKarnetow.push_back(TypKarnetu("BRAK", 0, 0, 0));
+
+	// Wczytanie danych z pliku do wektora typów karnetów
 	pliki.open("src/TypyKarnetow.txt", ios::in);
 	while (pliki >> nazwa >> cena >> open >> zajecia) {
 		typyKarnetow.push_back(TypKarnetu(nazwa, cena, open, zajecia));
 	}
 	pliki.close();
 
+	// Deklaracja zmiennych dla wczytania zajêæ
 	string opis;
 	time_t dataZajec;
 	int czasTrwania;
@@ -66,9 +75,13 @@ int main() {
 	string uczestnicy;
 	string loginUczestnika;
 
+	// Inicjalizacja wektorów przechowuj¹cych zajêcia, loginy uczestników i indeksy zajêæ
 	vector<Zajecia> listaZajec;
 	vector<string> loginyUczestnikow;
+	vector<int> indeksyZajec;
+	vector<string> konta;
 
+	// Wczytanie danych z pliku do wektora zajêæ
 	pliki.open("src/ListaZajec.txt", ios::in);
 	while (pliki >> nazwa >> opis >> dataZajec >> czasTrwania >> liczbaMiejsc >> loginProwadzacego)
 	{
@@ -84,14 +97,17 @@ int main() {
 	}
 	pliki.close();
 
+	// Inicjalizacja cennika i harmonogramu
 	Cennik cennik = Cennik(typyKarnetow); // tworzenie cennika
 	HarmonogramZajec harmonogram = HarmonogramZajec(listaZajec); // tworzenie harmonogramu
 
+	// Inicjalizacja zmiennych dla dzialania programu
 	bool dziala = true;
 	while (dziala) {
 	menu:
 		char wybor;
 
+		// Wyœwietlanie menu g³ównego
 		system("cls");
 		cout << "========= MENU =========" << endl;
 		cout << " 1) Logowanie" << endl;
@@ -100,6 +116,7 @@ int main() {
 		cout << "========================" << endl;
 		wybor = _getch();
 
+		// Inicjalizacja zmiennych dla logowania
 		fstream plik;
 		string szukanyLogin = "";
 		string login = "";
@@ -117,17 +134,19 @@ int main() {
 		char uprawnienia;
 		time_t dataOplacenia;
 		Klient klient;
-		vector<string> konta;
+		Pracownik pracownik;
 		string linia;
 		fstream plikUsuwanie;
 		char wybrany;
 		fstream plikAktualizuj;
 
+		// Obs³uga wyboru opcji w menu
 		switch (wybor) {
 		case '1':
 			plik.open("src/Konta.txt", ios::in);
 			system("cls");
 			while (!zalogowano) {
+				// Logowanie
 				cout << "login: ";
 				cin >> login;
 				cout << "haslo: ";
@@ -148,9 +167,11 @@ int main() {
 					}
 				}
 				cout << endl;
-				//
+				// Sprawdzenie poprawnoœci danych logowania
 				while (plik >> daneLogin >> daneHaslo && !zalogowano) {
 					if (login == daneLogin && haslo == daneHaslo) {
+
+						// Zalogowano pomyœlnie - wczytanie danych u¿ytkownika
 						zalogowano = true;
 						plik >> imie;
 						plik >> nazwisko;
@@ -159,29 +180,40 @@ int main() {
 						plik >> typKarnetu;
 						plik >> uprawnienia;
 						plik >> wiersz;
+
+						// Konwersja czasu zapisanego jako liczba na typ time_t
 						long long pomocnicza = stoll(wiersz);
 						dataOplacenia = static_cast<time_t>(pomocnicza);
 					}
+					// Przejœcie do nastêpnej linii w pliku
 					getline(plik, wiersz);
 				}
 
-				plik.clear();														// powrót wskaŸnika kursora w pliku na jego pocz¹tek
+				// Przywrócenie wskaŸnika pliku na pocz¹tek dla kolejnego u¿ycia
+				plik.clear();
 				plik.seekg(0, ios_base::beg);
 
+				// Obs³uga przypadku nieudanego logowania
 				if (!zalogowano) {
 					cout << "Bledne dane logowania!" << endl << endl;
 					iloscProbLogowania++;
+					// Przekroczenie limitu prób logowania, powrót do menu
 					if (iloscProbLogowania > 2) {
 						goto menu;
 					}
 				}
 			}
 			
+			// Logowanie u¿ytkownika jako klient lub pracownik na podstawie uprawnieñ
 			if (zalogowano && (uprawnienia == '0' || uprawnienia == 0)) {
+
+				// Inicjalizacja obiektu klienta i ustawienie danych
 				klient = Klient(imie, nazwisko, telefon, email);
 				klient.setKarnet(Karnet(dataOplacenia, typyKarnetow[typKarnetu]));
 				klient.setKontoUzytkownika(KontoUzytkownika(login, haslo));
-				vector<int> indeksyZajec;
+
+				// Ustalenie indeksów zajêæ, na które jest zapisany klient
+				indeksyZajec.clear();
 				for (int i = 0; i < listaZajec.size(); i++)
 				{
 					for (int j = 0; j < listaZajec[i].getLoginyUczestnikow().size(); j++)
@@ -194,12 +226,22 @@ int main() {
 				}
 				klient.setIndeksyZajec(indeksyZajec);
 			}
+			else if(zalogowano)
+			{
+				// Inicjalizacja obiektu pracownika i ustawienie danych
+				pracownik = Pracownik(imie, nazwisko, telefon, email);
+				pracownik.setKontoPracownika(KontoPracownika(login, haslo));
+			}
 			
+			// Pêtla obs³uguj¹ca menu u¿ytkownika po zalogowaniu
 			while (zalogowano) {
 				zalogowany:
 				system("cls");
+				// Menu u¿ytkownika zale¿ne od uprawnieñ
 				switch (uprawnienia) {
 				case '0':
+
+					// Menu klienta
 					cout << "==== Zalogowano jako " << login << " ====" << endl;
 					cout << " 1) Wyswietl Karnet" << endl;
 					cout << " 2) Weryfikacja Karnetu" << endl;
@@ -211,6 +253,7 @@ int main() {
 					wybor = _getch();
 					switch (wybor) {
 					case '1':
+						// Wyœwietlanie informacji o karnecie
 						do {
 							system("cls");
 							klient.getKarnet().wyswietlKarnet();
@@ -218,6 +261,7 @@ int main() {
 						} while (_getch() != 27);
 						break;
 					case '2':
+						// Weryfikacja wa¿noœci karnetu
 						do {
 							system("cls");
 							if (klient.getKarnet().sprawdzWaznosc()) {
@@ -230,6 +274,7 @@ int main() {
 						} while (_getch() != 27);
 						break;
 					case '3':
+						// Przegl¹danie cennika
 						cennik:
 						do 
 						{
@@ -242,6 +287,7 @@ int main() {
 						switch (wybor)
 						{
 						case '1':
+							// Wybieranie karnetu do zakupu
 							do
 							{
 								system("cls");
@@ -256,6 +302,7 @@ int main() {
 							}
 							else if (wybrany >= '1' && wybrany <= static_cast<char>(typyKarnetow.size()+48-1))
 							{
+								// Potwierdzenie zakupu karnetu
 								do
 								{
 									system("cls");
@@ -268,6 +315,7 @@ int main() {
 								{
 									if (klient.getKarnet().getTypKarnetu().getNazwa() == typyKarnetow[wybrany - 48].getNazwa()) 
 									{
+										// Opcja przed³u¿enia wa¿noœci karnetu
 										do
 										{
 											system("cls");
@@ -289,7 +337,7 @@ int main() {
 									{
 										klient.setKarnet(Karnet(time(0), typyKarnetow[wybrany - 48]));
 									}
-									// aktualizacja karnetow w pliku konta.txt
+									// Aktualizacja danych klient w pliku Konta.txt dotyczacych posiadanego karnetu i okresu jego wa¿noœci
 									plikAktualizuj.open("src/Konta.txt", ios::in);
 									konta.clear();
 									while (getline(plikAktualizuj, wiersz))
@@ -334,7 +382,21 @@ int main() {
 						}
 						break;
 					case '4':
-						zajecia:
+					zajecia:
+						// Przegl¹danie zajêæ klienta
+						listaZajec = harmonogram.getListaZajec();
+						indeksyZajec.clear();
+						for (int i = 0; i < listaZajec.size(); i++)
+						{
+							for (int j = 0; j < listaZajec[i].getLoginyUczestnikow().size(); j++)
+							{
+								if (login == listaZajec[i].getLoginyUczestnikow()[j])
+								{
+									indeksyZajec.push_back(i);
+								}
+							}
+						}
+						klient.setIndeksyZajec(indeksyZajec);
 						do {
 							system("cls");
 							klient.getKontoUzytkownika().przegladajZajecia(klient.getIndeksyZajec(), listaZajec);
@@ -348,6 +410,7 @@ int main() {
 						}
 						else
 						{
+							// Wybieranie zajêæ do usuniêcia
 							do
 							{
 								system("cls");
@@ -362,6 +425,7 @@ int main() {
 							}
 							else
 							{
+								// Potwierdzenie rezygnacji z zajêæ
 								do
 								{
 									system("cls");
@@ -376,8 +440,8 @@ int main() {
 									{
 										if (listaZajec[wybrany - 48].getLoginyUczestnikow()[l] == login)
 										{
+											// Usuniêcie klienta z listy uczestników zajêæ
 											listaZajec[wybrany - 48].getLoginyUczestnikow().erase(listaZajec[wybrany - 48].getLoginyUczestnikow().begin() + l);
-											harmonogram = HarmonogramZajec(listaZajec);
 											for (int k = 0; k < klient.getIndeksyZajec().size(); k++)
 											{
 												if (klient.getIndeksyZajec()[k] == wybrany-48)
@@ -385,6 +449,8 @@ int main() {
 													klient.getIndeksyZajec().erase(klient.getIndeksyZajec().begin() + k);
 												}
 											}
+											// Aktualizacja pliku ListaZajec.txt
+											listaZajec = harmonogram.getListaZajec();
 											plikAktualizuj.open("src/ListaZajec.txt", ios::out);
 											for (int i = 0; i < listaZajec.size(); i++)
 											{
@@ -408,7 +474,9 @@ int main() {
 						}
 						break;
 					case '5':
-						harmonogram:
+					harmonogram:
+						// Przegl¹danie harmonogramu zajêæ
+						listaZajec = harmonogram.getListaZajec();
 						do {
 							system("cls");
 							harmonogram.przegladajHarmonogram();
@@ -422,6 +490,7 @@ int main() {
 						}
 						else
 						{
+							// Wybieranie zajêæ do zarezerwowania
 							do
 							{
 								system("cls");
@@ -429,17 +498,18 @@ int main() {
 								harmonogram.przegladajHarmonogram();
 								cout << "ESC) Powrot" << endl;
 								wybrany = _getch();
-							} while (wybrany != 27 && (wybrany < '1' || wybrany > listaZajec.size()+48));
+							} while (wybrany != 27 && (wybrany < '0' || wybrany > listaZajec.size()+48-1));
 							if (wybrany == 27)
 							{
 								goto harmonogram;
 							}
 							else
 							{
-								for (int i = 0; i < listaZajec[wybrany - 48 - 1].getLoginyUczestnikow().size(); i++)
+								for (int i = 0; i < listaZajec[wybrany - 48].getLoginyUczestnikow().size(); i++)
 								{
-									if (listaZajec[wybrany - 48 - 1].getLoginyUczestnikow()[i] == login)
+									if (listaZajec[wybrany - 48].getLoginyUczestnikow()[i] == login)
 									{
+										// Ostrze¿enie, gdy klient jest ju¿ zapisany na dane zajêcia
 										do
 										{
 											system("cls");
@@ -449,10 +519,12 @@ int main() {
 										goto harmonogram;
 									}
 								}
-								if (listaZajec[wybrany - 48 - 1].getLiczbaMiejsc() - listaZajec[wybrany - 48 - 1].getLoginyUczestnikow().size() > 0)
+								// Jeœli s¹ dostêpne miejsca na wybrany kurs, zarejestruj u¿ytkownika
+								if (listaZajec[wybrany - 48].getLiczbaMiejsc() - listaZajec[wybrany - 48].getLoginyUczestnikow().size() > 0)
 								{
-									listaZajec[wybrany - 48 - 1].getLoginyUczestnikow().push_back(login);
+									listaZajec[wybrany - 48].getLoginyUczestnikow().push_back(login);
 									harmonogram = HarmonogramZajec(listaZajec);
+									// Aktualizuj plik z list¹ zajêæ po dodaniu nowego uczestnika
 									plikAktualizuj.open("src/ListaZajec.txt", ios::out);
 									for (int i = 0; i < listaZajec.size(); i++)
 									{
@@ -465,7 +537,7 @@ int main() {
 										plikAktualizuj << endl;
 									}
 									plikAktualizuj.close();
-									klient.getIndeksyZajec().push_back(wybrany - 48 - 1);
+									klient.getIndeksyZajec().push_back(wybrany - 48);
 									do
 									{
 										system("cls");
@@ -475,6 +547,7 @@ int main() {
 								}
 								else
 								{
+									// Je¿eli nie ma dostêpnych miejsc, poinformuj u¿ytkownika
 									do
 									{
 										system("cls");
@@ -488,6 +561,8 @@ int main() {
 						}
 						break;
 					case '6':
+						// Usuwanie konta u¿ytkownika
+						// Usuñ konto u¿ytkownika po potwierdzeniu
 						do 
 						{
 							system("cls");
@@ -499,6 +574,7 @@ int main() {
 						} while (wybor != 't' && wybor != 'T' && wybor != 'n' && wybor != 'N');
 						if(wybor == 't' || wybor == 'T') 
 						{
+							// Pobierz konta z pliku do wektora kont
 							plikUsuwanie.open("src/Konta.txt", ios::in);
 							konta.clear();
 							while (getline(plikUsuwanie, wiersz))
@@ -511,6 +587,8 @@ int main() {
 								}
 							}
 							plikUsuwanie.close();
+
+							// Aktualizuj plik z list¹ kont po usuniêciu konta
 							plikUsuwanie.open("src/Konta.txt", ios::out);
 							for (int i = 0; i < konta.size(); i++)
 							{
@@ -527,6 +605,7 @@ int main() {
 					}
 					break;
 				case '1':
+					// Konto pracownika
 					cout << "==== Zalogowano jako " << login << " ====" << endl;
 					cout << " 1) Zarzadzanie Cennikiem" << endl;
 					cout << " 2) Zarzadzanie Kontami" << endl;
@@ -535,10 +614,16 @@ int main() {
 					wybor = _getch();
 					switch (wybor) {
 					case '1':
+						// Opcja zarz¹dzania cennikiem dla zalogowanego pracownika
+						pracownik.getKontoPracownika().zarzadzajCennikiem(cennik);
 						break;
 					case '2':
+						// Opcja zarz¹dzania kontami dla zalogowanego pracownika
+						pracownik.getKontoPracownika().zarzadzajKontami(cennik);
 						break;
 					case '3':
+						// Opcja zarz¹dzania harmonogramem zajêæ dla zalogowanego pracownika
+						pracownik.getKontoPracownika().zarzadzajHarmoZajec(harmonogram);
 						break;
 					case 27:
 						goto menu;
@@ -554,6 +639,7 @@ int main() {
 			plik.close();
 			break;
 		case '2':
+			// Tworzenie nowego konta
 			cout << "======== Tworzenie konta ========" << endl;
 			cout << "Podaj imie: ";
 			cin >> imie;
@@ -567,6 +653,7 @@ int main() {
 			cout << "Utworz login: ";
 			cin >> login;
 
+			// Sprawdzanie, czy podany login jest ju¿ zajêty
 			plik.open("src/Konta.txt", ios::in);
 			while (plik >> daneLogin) {
 				getline(plik, wiersz);
@@ -581,6 +668,8 @@ int main() {
 			cout << "Utworz haslo: ";
 			char znak;
 			haslo = "";
+
+			// Wprowadzanie has³a z ukrytymi znakami
 			while ((znak = _getch()) != '\r') {
 				if (znak == '\b') {
 					if (!haslo.empty()) {
@@ -593,6 +682,7 @@ int main() {
 					cout << '*';
 				}
 			}
+			// Zapisywanie nowego konta do pliku
 			plik.open("src/Konta.txt", ios::out | ios_base::app);
 			plik << login << "\t" << haslo << "\t" << imie << "\t" << nazwisko << "\t" << telefon << "\t" << email << "\t" << 0 << "\t" << 0 << "\t" << 0 << "\n";
 			plik.close();

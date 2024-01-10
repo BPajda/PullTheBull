@@ -1,12 +1,12 @@
 #pragma once
 #include <iostream>
-#include "Pracownik.h"
 #include <vector>
 
 using namespace std;
 
 class Zajecia
 {
+public:
 	string prowadzacy;
 	vector<string> loginyUczestnikow;
 	string nazwa;
@@ -15,7 +15,6 @@ class Zajecia
 	int czasTrwania;
 	int liczbaMiejsc;
 public:
-	void modyfikujZajecia();
 
 	Zajecia(string nazwa, string opis, time_t dataZajec, int czasTrwania, int liczbaMiejsc, string prowadzacy, vector<string> loginyUczestnikow);
 	Zajecia();
