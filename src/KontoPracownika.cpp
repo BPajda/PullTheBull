@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// Funkcja sprawdzaj¹ca czy podany napis jest liczb¹
 bool isNumber(string liczba) {
 	if (liczba.empty()) {
 		return false; // Pusty ci¹g nie jest liczb¹
@@ -27,6 +28,7 @@ bool isNumber(string liczba) {
 	return true; // Ci¹g jest liczb¹
 }
 
+// Funkcja szablonowa s³u¿¹ca do przeszukiwania wektora podanego typu, przyjmuje szukan¹ frazê jako parametr
 template <typename T>
 bool szukajWektor(vector<T> wektor, string nazwa) {
 	for (T element : wektor) {
@@ -37,6 +39,7 @@ bool szukajWektor(vector<T> wektor, string nazwa) {
 	return false;
 }
 
+// Funkcja zarz¹dzaj¹ca cennikiem karnetów dla konta pracownika
 void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 {
 	char wybor;
@@ -46,6 +49,7 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 	bool open, zajecia;
 	do
 	{
+		// Menu zarz¹dzania cennikiem
 		system("cls");
 		cennik.przegladajCennik();
 		cout << " 1) Dodaj Karnet" << endl;
@@ -57,16 +61,20 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 	switch (wybor)
 	{
 	case '1':
+		// Dodawanie nowego karnetu
 		system("cls");
 		cout << "Podaj nazwe nowego karnetu: ";
 		cin >> nazwa;	
+		// Sprawdzanie, czy karnet o podanej nazwie ju¿ istnieje
 		while (szukajWektor(cennik.getTypyKarnetow(), nazwa))
 		{
 			cout << "Karnet o takiej nazwie juz istnieje. Podaj inna nazwe" << endl;
 			cin >> nazwa;
 		}
+		// Podawanie ceny karnetu
 		system("cls");
 		cout << "Podaj cene karnetu: ";
+		// Walidacja wprowadzonej ceny
 		while (!(cin >> cena) || cena < 0)
 		{
 			system("cls");
@@ -74,6 +82,7 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
+		// Wybór przywilejów OPEN
 		do
 		{
 			system("cls");
@@ -90,6 +99,7 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 		{
 			open = 0;
 		}
+		// Wybór dostêpnoœci zajêæ
 		do
 		{
 			system("cls");
@@ -106,10 +116,13 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 		{
 			zajecia = 0;
 		}
+		// Potwierdzenie dodania karnetu
 		do
 		{
 			system("cls");
 			cout << "Czy chcesz dodac karnet: " << endl;
+
+			// Wyœwietlanie informacji o nowym karnecie
 			cout << "======================" << endl;
 			cout << "Nazwa: " << nazwa << endl;
 			cout << "Cena: " << cena << "zl" << endl;
@@ -120,9 +133,12 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 			cout << " N) NIE" << endl;
 			wybor = _getch();
 		} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+		// Dodanie karnetu do cennika
 		if (wybor == 'T' || wybor == 't')
 		{
 			cennik.dodajKarnet(TypKarnetu(nazwa, cena, open, zajecia));
+
+			// Aktualizacja pliku z typami karnetów
 			fstream plikAktualizuj;
 			plikAktualizuj.open("src/TypyKarnetow.txt", ios::out);
 			for (int i = 1; i < cennik.getTypyKarnetow().size(); i++)
@@ -134,6 +150,7 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 		}
 		break;
 	case '2':
+		// Usuwanie karnetu
 		do
 		{
 			system("cls");
@@ -148,6 +165,7 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 		}
 		else
 		{
+			// Potwierdzenie usuniêcia karnetu
 			do
 			{
 				system("cls");
@@ -156,9 +174,12 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 				cout << " N) NIE" << endl;
 				wybor = _getch();
 			} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+			// Usuniêcie karnetu z cennika
 			if (wybor == 'T' || wybor == 't')
 			{
 				cennik.usunKarnet(cennik.getTypyKarnetow()[wybrany - 48].getNazwa());
+
+				// Aktualizacja pliku z typami karnetów
 				fstream plikAktualizuj;
 				plikAktualizuj.open("src/TypyKarnetow.txt", ios::out);
 				for (int i = 1; i < cennik.getTypyKarnetow().size(); i++)
@@ -171,6 +192,7 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 		}
 		break;
 	case '3':
+		// Modyfikowanie karnetu
 		do
 		{
 			system("cls");
@@ -179,12 +201,14 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 			cout << "ESC) Powrot" << endl;
 			wybrany = _getch();
 		} while (wybrany != 27 && (wybrany < '0' || wybrany > cennik.getTypyKarnetow().size() + 48 - 1));
+		// Anulowanie modyfikacji
 		if (wybrany == 27)
 		{
 			break;
 		}
 		else
 		{
+			// Wyœwietlanie informacji o karnecie do modyfikacji
 			system("cls");
 			cout << "==========================" << endl;
 			cout << cennik.getTypyKarnetow()[wybrany - 48].getNazwa() << endl;
@@ -192,13 +216,19 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 			cout << "OPEN: " << (cennik.getTypyKarnetow()[wybrany - 48].getOpen() ? "TAK" : "NIE") << endl;
 			cout << "Zajecia: " << (cennik.getTypyKarnetow()[wybrany - 48].getZajecia() ? "TAK" : "NIE") << endl;
 			cout << "==========================" << endl << endl;
+
+			// Podawanie nowej nazwy karnetu
 			cout << "Podaj nowa nazwe karnetu: ";
 			cin >> nazwa;
+
+			// Sprawdzanie, czy karnet o podanej nazwie ju¿ istnieje
 			while (szukajWektor(cennik.getTypyKarnetow(), nazwa))
 			{
 				cout << "Karnet o takiej nazwie juz istnieje. Podaj inna nazwe" << endl;
 				cin >> nazwa;
 			}
+
+			// Podawanie nowej ceny karnetu
 			system("cls");
 			cout << "==========================" << endl;
 			cout << cennik.getTypyKarnetow()[wybrany - 48].getNazwa() << endl;
@@ -206,7 +236,9 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 			cout << "OPEN: " << (cennik.getTypyKarnetow()[wybrany - 48].getOpen() ? "TAK" : "NIE") << endl;
 			cout << "Zajecia: " << (cennik.getTypyKarnetow()[wybrany - 48].getZajecia() ? "TAK" : "NIE") << endl;
 			cout << "==========================" << endl << endl;
+
 			cout << "Podaj zmieniona cene karnetu: ";
+			// Walidacja wprowadzonej ceny
 			while (!(cin >> cena) || cena < 0)
 			{
 				system("cls");
@@ -214,6 +246,7 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
+			// Wybór przywilejów OPEN
 			do
 			{
 				system("cls");
@@ -236,6 +269,7 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 			{
 				open = 0;
 			}
+			// Wybór dostêpnoœci zajêæ
 			do
 			{
 				system("cls");
@@ -258,6 +292,7 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 			{
 				zajecia = 0;
 			}
+			// Potwierdzenie zmian
 			do
 			{
 				system("cls");
@@ -279,9 +314,13 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 				cout << " N) NIE" << endl;
 				wybor = _getch();
 			} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+			// Zastosowanie zmian
 			if (wybor == 'T' || wybor == 't')
 			{
+				// Aktualizacja danych karnetu w wektorze przechowuj¹cym typy karnetów
 				cennik.zmienKarnet(cennik.getTypyKarnetow()[wybrany - 48].getNazwa(), TypKarnetu(nazwa, cena, open, zajecia));
+
+				// Aktualizacja pliku przechowuj¹cego dane o typach karnetów
 				fstream plikAktualizuj;
 				plikAktualizuj.open("src/TypyKarnetow.txt", ios::out);
 				for (int i = 1; i < cennik.getTypyKarnetow().size(); i++)
@@ -299,6 +338,7 @@ void KontoPracownika::zarzadzajCennikiem(Cennik& cennik)
 	}
 }
 
+// Funkcja zarz¹dzaj¹ca kontami u¿ytkowników i pracowników dla konta pracownika
 void KontoPracownika::zarzadzajKontami(Cennik cennik)
 {
 	char wybor;
@@ -340,6 +380,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 	switch (wybor)
 	{
 	case '1':
+		// Dodawanie nowego konta
 		cout << "======== Dodawanie konta ========" << endl;
 		cout << "Podaj imie: ";
 		cin >> imie;
@@ -349,6 +390,8 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 		cin >> telefon;
 		cout << "Podaj email: ";
 		cin >> email;
+
+		// Tworzenie unikalnego loginu
 		tworzenieLoginu:
 		cout << "Utworz login: ";
 		cin >> login;
@@ -364,6 +407,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 		}
 		plik.close();
 
+		// Tworzenie has³a z ukrytymi znakami
 		cout << "Utworz haslo: ";
 		char znak;
 		haslo = "";
@@ -379,6 +423,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 				cout << '*';
 			}
 		}
+		// Dodawanie karnetu do konta (opcjonalne)
 		do
 		{
 			system("cls");
@@ -389,6 +434,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 		} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
 		if (wybor == 'T' || wybor == 't')
 		{
+			// Wybieranie karnetu
 			do
 			{
 				system("cls");
@@ -405,27 +451,30 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 			{
 				typKarnetu = wybrany - 48;
 			}
+			// Wybór czy karnet ma byæ aktualny
+			do
+			{
+				system("cls");
+				cout << "Czy karnet ma byc aktualny?" << endl;
+				cout << " T) TAK" << endl;
+				cout << " N) NIE" << endl;
+				wybor = _getch();
+			} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+			if (wybor == 'T' || wybor == 't')
+			{
+				ostatniaPlatnosc = time(0);
+			}
+			else
+			{
+				ostatniaPlatnosc = 0;
+			}
 		}
 		else
 		{
 			typKarnetu = 0;
-		}
-		do
-		{
-			system("cls");
-			cout << "Czy karnet ma byc aktualny?" << endl;
-			cout << " T) TAK" << endl;
-			cout << " N) NIE" << endl;
-			wybor = _getch();
-		} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
-		if (wybor == 'T' || wybor == 't')
-		{
-			ostatniaPlatnosc = time(0);
-		}
-		else
-		{
 			ostatniaPlatnosc = 0;
 		}
+		// Wybór poziomu uprawnieñ
 		do
 		{
 			system("cls");
@@ -442,6 +491,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 		{
 			uprawnienia = 1;
 		}
+		// Potwierdzenie dodania konta
 		do
 		{
 			system("cls");
@@ -465,6 +515,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 		} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
 		if (wybor == 'T' || wybor == 't')
 		{
+			// Dodanie konta do wektora kont
 			konta.clear();
 			plik.open("src/Konta.txt", ios::in);
 			while (getline(plik, wiersz)) {
@@ -473,6 +524,8 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 			plik.close();
 			konta.push_back(login + '\t' + haslo + '\t' + imie + '\t' + nazwisko + '\t' + telefon + '\t' + email + '\t' + to_string(typKarnetu)
 				+ '\t' + to_string(uprawnienia) + '\t' + to_string(ostatniaPlatnosc));
+			
+			// Aktualizacja pliku przechowuj¹cego konta
 			plik.open("src/Konta.txt", ios::out);
 			for (int i = 0; i < konta.size(); i++)
 			{
@@ -482,9 +535,12 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 		}
 		break;
 	case '2':
+		// Usuwanie konta
 		cout << "Podaj login konta do usuniecia" << endl;
 		cin >> szukanyLogin;
 		znaleziony = false;
+
+		// Sprawdzenie czy konto istnieje
 		plik.open("src/Konta.txt", ios::in);
 		while (plik >> login) {
 			getline(plik, wiersz);
@@ -493,8 +549,11 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 			}
 		}
 		plik.close();
+
+		// Jeœli konto istnieje
 		if (znaleziony)
 		{
+			// Potwierdzenie trwa³ego usuniêcia konta
 			do
 			{
 				system("cls");
@@ -505,6 +564,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 			} while (wybor != 't' && wybor != 'T' && wybor != 'n' && wybor != 'N');
 			if (wybor == 't' || wybor == 'T')
 			{
+				// Przepisanie kont z pliku do wektora, z pominiêciem usuwanego konta
 				plik.open("src/Konta.txt", ios::in);
 				konta.clear();
 				while (getline(plik, wiersz))
@@ -517,6 +577,8 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 					}
 				}
 				plik.close();
+
+				// Aktualizacja pliku z kontami z wektora
 				plik.open("src/Konta.txt", ios::out);
 				for (int i = 0; i < konta.size(); i++)
 				{
@@ -527,6 +589,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 		}
 		else
 		{
+			// Informacja o braku konta o podanym loginie
 			do
 			{
 				cout << "Konto o podanym loginie nie istnieje!" << endl;
@@ -535,9 +598,12 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 		}
 		break;
 	case '3':
+		// Modyfikowanie konta
 		cout << "Podaj login konta do zmiany" << endl;
 		cin >> szukanyLogin;
 		znaleziony = false;
+
+		// Sprawdzenie czy konto istnieje
 		plik.open("src/Konta.txt", ios::in);
 		while (plik >> login) {
 			getline(plik, wiersz);
@@ -546,22 +612,27 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 			}
 		}
 		plik.close();
+
+		// Jeœli konto istnieje
 		if (znaleziony)
 		{
+			// Wczytanie kont z pliku do wektora
 			konta.clear();
 			plik.open("src/Konta.txt", ios::in);
 			while (getline(plik, wiersz)) {
 				konta.push_back(wiersz);
 			}
 			plik.close();
+			// Znalezienie i modyfikacja konta w wektorze
 			for (int i = 0; i < konta.size(); i++)
 			{
 				if (czyZawiera(konta[i], szukanyLogin))
 				{
-					// tutaj wszystkie zmiany co do konta
 					wiersz = konta[i];
 					istringstream strumien(wiersz);
 					strumien >> login >> haslo >> imie >> nazwisko >> telefon >> email >> typKarnetu >> uprawnienia >> ostatniaPlatnosc;
+
+					// Wyœwietlenie informacji o koncie przed zmianami
 					system("cls");
 					cout << "======== Zmieniane konto ========" << endl;
 					cout << imie << " " << nazwisko << endl;
@@ -575,6 +646,8 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 					{
 						cout << "Karnet wazny do: " << konwertujTimeT(ostatniaPlatnosc + 2592000) << endl;
 					}
+
+					// Modyfikacja poszczególnych pól konta
 					cout << "=================================" << endl;
 					cout << "Podaj zmienione imie" << endl;
 					cin >> noweImie;
@@ -648,6 +721,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 					cout << "Podaj zmieniony login" << endl;
 					cin >> nowyLogin;
 
+					// Sprawdzenie unikalnoœci nowego loginu
 					if(login != nowyLogin) 
 					{ 
 						plik.open("src/Konta.txt", ios::in);
@@ -679,6 +753,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 					cout << "Podaj zmienione haslo" << endl;
 					cin >> noweHaslo;
 
+					// Wybór nowych uprawnieñ (Klient/Pracownik)
 					do
 					{
 						system("cls");
@@ -700,6 +775,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 						cout << " P) Pracownik" << endl;
 						wybor = _getch();
 					} while (wybor != 'k' && wybor != 'K' && wybor != 'p' && wybor != 'P');
+					// Przypisanie odpowiednich uprawnieñ na podstawie wyboru
 					if (wybor == 'k' || wybor == 'K')
 					{
 						noweUprawnienia = 0;
@@ -709,6 +785,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 						noweUprawnienia = 1;
 					}
 					
+					// Wybór dodania karnetu do konta
 					do
 					{
 						system("cls");
@@ -732,6 +809,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 					} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
 					if (wybor == 'T' || wybor == 't')
 					{
+						// Wybór karnetu
 						do
 						{
 							system("cls");
@@ -740,6 +818,8 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 							cout << "ESC) Anuluj dodawanie karnetu" << endl;
 							wybrany = _getch();
 						} while (wybrany != 27 && (wybrany < '1' || wybrany > cennik.getTypyKarnetow().size() + 48));
+
+						// Anulowanie dodawania karnetu
 						if (wybrany == 27)
 						{
 							nowyTypKarnetu = 0;
@@ -747,6 +827,8 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 						else
 						{
 							nowyTypKarnetu = wybrany - 48;
+
+							// Wybór aktualnoœci karnetu
 							do
 							{
 								system("cls");
@@ -768,6 +850,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 								cout << " N) NIE" << endl;
 								wybor = _getch();
 							} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+							// Aktualizacja daty ostatniej p³atnoœci na podstawie wyboru u¿ytkownika
 							if (wybor == 'T' || wybor == 't')
 							{
 								nowaOstatniaPlatnosc = time(0);
@@ -783,6 +866,8 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 						nowyTypKarnetu = 0;
 						nowaOstatniaPlatnosc = 0;
 					}
+
+					// Wybór u¿ytkownika dotycz¹cy akceptacji zmiany konta
 					do
 					{
 						system("cls");
@@ -818,12 +903,14 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 						cout << " N) NIE" << endl;
 						wybor = _getch();
 					} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+					// Zastosowanie zmiany, jeœli u¿ytkownik zaakceptuje
 					if (wybor == 'T' || wybor == 't')
 					{
-						// wstawienie zmienionego rekordu na miejsce starego w wektorze
+						// Wstawienie zmienionego rekordu na miejsce starego w wektorze
 						konta[i] = nowyLogin + '\t' + noweHaslo + '\t' + noweImie + '\t' + noweNazwisko + '\t' + nowyTelefon + '\t' + nowyEmail + '\t' + to_string(nowyTypKarnetu)
 							+ '\t' + to_string(noweUprawnienia) + '\t' + to_string(nowaOstatniaPlatnosc);
-						// uaktualnienie pliku zawierajacego liste kont
+
+						// Aktualizacja pliku zawieraj¹cego listê kont
 						plik.open("src/Konta.txt", ios::out);
 						for (int i = 0; i < konta.size(); i++)
 						{
@@ -836,6 +923,7 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 		}
 		else
 		{
+			// Podany login nieznaleziony
 			do
 			{
 				cout << "Konto o podanym loginie nie istnieje!" << endl;
@@ -848,9 +936,11 @@ void KontoPracownika::zarzadzajKontami(Cennik cennik)
 	}
 }
 
+// Funkcja zarz¹dzaj¹ca harmonogramem zajêæ dla konta pracownika
 void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 {
 	{
+		// Deklaracja zmiennych lokalnych
 		char wybor;
 		char wybrany;
 		string nazwa;
@@ -862,6 +952,7 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 		string dataString;
 		vector<string> loginy = {};
 
+		// Wyœwietlanie opcji menu
 		do
 		{
 			system("cls");
@@ -875,9 +966,12 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 		switch (wybor)
 		{
 		case '1':
+			// Dodawanie nowych zajêæ
 			system("cls");
 			cout << "Podaj nazwe nowych zajec: ";
 			cin >> nazwa;
+
+			// Sprawdzanie, czy zajêcia o podanej nazwie ju¿ istniej¹
 			while (szukajWektor(harmonogram.getListaZajec(), nazwa))
 			{
 				cout << "Zajecia o takiej nazwie juz istnieja. Podaj inna nazwe" << endl;
@@ -909,6 +1003,7 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 			cout << "Podaj godzine i date zajec w formacie (godziny minuty dzien miesiac rok)" << endl;
 			getline(cin >> ws, dataString);
 
+			// Walidacja formatu daty
 			while(dataString.size() != 14 || !dobryFormat(dataString))
 			{
 				cout << "Podaj poprawna date" << endl;
@@ -919,6 +1014,8 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 			system("cls");
 			cout << "Podaj prowadzacego zajecia: " << endl;
 			cin >> prowadzacy;
+
+			// Wyœwietlanie podsumowania wprowadzonych danych i potwierdzenie dodania zajêæ
 			do
 			{
 				system("cls");
@@ -935,9 +1032,12 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 				cout << " N) NIE" << endl;
 				wybor = _getch();
 			} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+			// Dodanie zajêæ do harmonogramu
 			if (wybor == 'T' || wybor == 't')
 			{
 				harmonogram.dodajZajecia(Zajecia(nazwa, opis, dataZajec, czasTrwania, liczbaMiejsc, prowadzacy, loginy));
+
+				// Aktualizacja pliku z list¹ zajêæ
 				fstream plikAktualizuj;
 				plikAktualizuj.open("src/ListaZajec.txt", ios::out);
 				for (int i = 0; i < harmonogram.getListaZajec().size(); i++)
@@ -955,14 +1055,17 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 			}
 			break;
 		case '2':
+			// Usuwanie zajêæ
 			do
 			{
+				// Wyœwietlanie listy zajêæ w harmonogramie
 				system("cls");
 				harmonogram.przegladajHarmonogram();
 				cout << "Ktore zajecia chcesz usunac?" << endl;
 				cout << "ESC) Powrot" << endl;
 				wybrany = _getch();
 			} while (wybrany != 27 && (wybrany < '0' || wybrany > harmonogram.getListaZajec().size() + 48-1));
+			// Powrót do menu g³ównego, jeœli u¿ytkownik naciœnie ESC
 			if (wybrany == 27)
 			{
 				break;
@@ -971,15 +1074,19 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 			{
 				do
 				{
+					// Wyœwietlanie potwierdzenia usuniêcia wybranych zajêæ
 					system("cls");
 					cout << "Czy na pewno chcesz usunac zajecia " << harmonogram.getListaZajec()[wybrany - 48].getNazwa() << "?" << endl;
 					cout << " T) TAK" << endl;
 					cout << " N) NIE" << endl;
 					wybor = _getch();
 				} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+				// Usuniêcie zajêæ, jeœli u¿ytkownik potwierdzi
 				if (wybor == 'T' || wybor == 't')
 				{
 					harmonogram.usunZajecia(harmonogram.getListaZajec()[wybrany - 48].getNazwa());
+
+					// Aktualizacja pliku z list¹ zajêæ
 					fstream plikAktualizuj;
 					plikAktualizuj.open("src/ListaZajec.txt", ios::out);
 					for (int i = 0; i < harmonogram.getListaZajec().size(); i++)
@@ -998,20 +1105,24 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 			}
 			break;
 		case '3':
+			// Modyfikowanie zajêæ
 			do
 			{
+				// Wyœwietlanie listy zajêæ w harmonogramie
 				system("cls");
 				harmonogram.przegladajHarmonogram();
 				cout << "Ktore zajecia chcesz modyfikowac?" << endl;
 				cout << "ESC) Powrot" << endl;
 				wybrany = _getch();
 			} while (wybrany != 27 && (wybrany <= '0' || wybrany > harmonogram.getListaZajec().size() + 48-1));
+			// Powrót do menu g³ównego, jeœli u¿ytkownik naciœnie ESC
 			if (wybrany == 27)
 			{
 				break;
 			}
 			else
 			{
+				// Wyœwietlanie informacji o wybranych zajêciach
 				system("cls");
 				cout << "==========================" << endl;
 				cout << harmonogram.getListaZajec()[wybrany - 48].getNazwa() << endl;
@@ -1021,9 +1132,12 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 				cout << "Data zajec: " << konwertujTimeT(harmonogram.getListaZajec()[wybrany - 48].getDataZajec()) << endl;
 				cout << "Prowadzacy: " << harmonogram.getListaZajec()[wybrany - 48].getProwadzacy() << endl;
 				cout << "==========================" << endl << endl;
+
+				// Pobieranie nowych danych zajêæ
 				cout << "Podaj nowa nazwe zajec: ";
 				cin >> nazwa;
 				
+				// Kontynuacja zmian danych
 				system("cls");
 				cout << "==========================" << endl;
 				cout << harmonogram.getListaZajec()[wybrany - 48].getNazwa() << endl;
@@ -1048,6 +1162,7 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 				cout << "==========================" << endl << endl;
 				cout << "Podaj zmieniona godzine i date zajec w formacie (godziny minuty dzien miesiac rok)" << endl;
 
+				// Walidacja poprawnoœci wprowadzonej daty
 				getline(cin >> ws, dataString);
 				dataZajec = parsujDate(dataString);
 
@@ -1060,6 +1175,8 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 				cout << "Data zajec: " << konwertujTimeT(harmonogram.getListaZajec()[wybrany - 48].getDataZajec()) << endl;
 				cout << "Prowadzacy: " << harmonogram.getListaZajec()[wybrany - 48].getProwadzacy() << endl;
 				cout << "==========================" << endl << endl;
+
+				// Walidacja poprawnoœci danych wejœciowych
 				cout << "Podaj zmieniony czas trwania zajec [min]: ";
 				while (!(cin >> czasTrwania) || czasTrwania < 0)
 				{
@@ -1077,6 +1194,8 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 				cout << "Data zajec: " << konwertujTimeT(harmonogram.getListaZajec()[wybrany - 48].getDataZajec()) << endl;
 				cout << "Prowadzacy: " << harmonogram.getListaZajec()[wybrany - 48].getProwadzacy() << endl;
 				cout << "==========================" << endl << endl;
+
+				// Walidacja poprawnoœci danych wejœciowych
 				cout << "Podaj zmieniona liczbe miejsc"<< endl;
 				while (!(cin >> liczbaMiejsc) || liczbaMiejsc < 0)
 				{
@@ -1098,6 +1217,7 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 				cin >> prowadzacy;
 				do
 				{
+					// Wyœwietlanie potwierdzenia zmiany zajêæ
 					system("cls");
 					cout << "Czy na pewno chcesz zmienic zajecia: " << endl;
 					cout << "==========================" << endl;
@@ -1121,9 +1241,12 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 					cout << " N) NIE" << endl;
 					wybor = _getch();
 				} while (wybor != 'T' && wybor != 't' && wybor != 'N' && wybor != 'n');
+				// Aktualizacja danych zajêæ po potwierdzeniu zmian
 				if (wybor == 'T' || wybor == 't')
 				{
 					harmonogram.zmienZajecia(harmonogram.getListaZajec()[wybrany - 48].getNazwa(), Zajecia(nazwa, opis, dataZajec, czasTrwania, liczbaMiejsc, prowadzacy, harmonogram.getListaZajec()[wybrany - 48].getLoginyUczestnikow()));
+					
+					// Aktualizacja pliku przechowuj¹cego dane o zajeciach
 					fstream plikAktualizuj;
 					plikAktualizuj.open("src/ListaZajec.txt", ios::out);
 					for (int i = 0; i < harmonogram.getListaZajec().size(); i++)
@@ -1142,6 +1265,7 @@ void KontoPracownika::zarzadzajHarmoZajec(HarmonogramZajec& harmonogram)
 			}
 			break;
 		case 27:
+			// Powrót z menu
 			return;
 		}
 	}
@@ -1151,25 +1275,30 @@ void KontoPracownika::wpiszDaneLogowania(string login, string haslo)
 {
 }
 
+// Konstruktor z parametrami
 KontoPracownika::KontoPracownika(string login, string haslo)
 {
 	this->login = login;
 	this->haslo = haslo;
 }
 
+// Konstruktor domyœlny
 KontoPracownika::KontoPracownika()
 {
 }
 
+// Destruktor
 KontoPracownika::~KontoPracownika()
 {
 }
 
+// Getter zwracaj¹cy login pracownika
 string KontoPracownika::getLogin()
 {
 	return this->login;
 }
 
+// Funkcja konwertuj¹ca datê wpisan¹ w odpowiednim formacie w stringu, na datê w typie time_t
 time_t parsujDate(string& dataStr) {
 	tm strukturaCzasu = {}; // Inicjalizacja struktury tm
 
@@ -1205,8 +1334,11 @@ time_t parsujDate(string& dataStr) {
 	return znacznikCzasu;
 }
 
-bool dobryFormat(string data)		// funkcja ma za zadanie sprawdzic czy podana data w stringu zgadza sie z formatem hh mm dd mm yy,
-{									// ponadto sprawdza czy podane wartosci godzin i dni miesiaca sa poprawne wzgledem rzeczywistosci np. miesiac ma maks. 31 dni
+// Funkcja ma za zadanie sprawdziæ czy podana data w stringu zgadza siê z formatem [hh mm dd mm yy]
+// Ponadto sprawdza czy podane wartoœci godzin i dni miesi¹ca s¹ poprawne wzglêdem rzeczywistoœci 
+// np. jeden miesi¹c ma maks. 31 dni
+bool dobryFormat(string data)
+{
 	for (int i = 0; i < data.size(); i++)
 	{
 		if ((i % 3) + 1 == 3 && data[i] != ' ')
@@ -1275,6 +1407,7 @@ bool dobryFormat(string data)		// funkcja ma za zadanie sprawdzic czy podana dat
 	return true;
 }
 
+// Funkcja sprawdzaj¹ca czy podany napis znajduje siê wewn¹trz innego napisu
 bool czyZawiera(string tekst, string podciag) {
 	// Jeœli find zwraca std::string::npos, to podci¹g nie istnieje w tekœcie
 	return tekst.find(podciag) != string::npos;

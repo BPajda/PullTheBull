@@ -3,11 +3,13 @@
 
 using namespace std;
 
+// Dodaj nowy karnet do cennika
 void Cennik::dodajKarnet(TypKarnetu nowyTyp)
 {
 	this->typyKarnetow.push_back(nowyTyp);
 }
 
+// Usuñ karnet o podanej nazwie z cennika
 void Cennik::usunKarnet(string nazwa)
 {
 	for (int i = 0; i < this->typyKarnetow.size(); i++)
@@ -19,6 +21,7 @@ void Cennik::usunKarnet(string nazwa)
 	}
 }
 
+// Zmieñ istniej¹cy karnet na nowy
 void Cennik::zmienKarnet(string nazwa, TypKarnetu zmienionyKarnet)
 {
 	for (int i = 0; i < this->typyKarnetow.size(); i++)
@@ -30,6 +33,7 @@ void Cennik::zmienKarnet(string nazwa, TypKarnetu zmienionyKarnet)
 	}
 }
 
+// Wyœwietl wszystkie dostêpne karnety w cenniku
 void Cennik::przegladajCennik()
 {
 	cout << "====== Dostepne Karnety ======" << endl << endl;
@@ -58,19 +62,23 @@ void Cennik::przegladajCennik()
 	cout << "==============================" << endl;
 }
 
+// Konstruktor z parametrami
 Cennik::Cennik(vector<TypKarnetu> typyKarnetow)
 {
 	this->typyKarnetow = typyKarnetow;
 }
 
+// Konstruktor domyœlny
 Cennik::Cennik()
 {
 }
 
+// Destruktor
 Cennik::~Cennik()
 {
 }
 
+// Getter dla wektora z typami karnetów
 vector<TypKarnetu>& Cennik::getTypyKarnetow() {
 	return this->typyKarnetow;
 }

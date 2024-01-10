@@ -3,11 +3,13 @@
 
 using namespace std;
 
+// Dodaj nowe zajêcia do harmonogramu
 void HarmonogramZajec::dodajZajecia(Zajecia zajecia)
 {
 	this->listaZajec.push_back(zajecia);
 }
 
+// Usuñ zajêcia o podanej nazwie z harmonogramu
 void HarmonogramZajec::usunZajecia(string nazwa)
 {
 	for (int i = 0; i < this->listaZajec.size(); i++)
@@ -19,6 +21,7 @@ void HarmonogramZajec::usunZajecia(string nazwa)
 	}
 }
 
+// Zmieñ istniej¹ce zajêcia na nowe
 void HarmonogramZajec::zmienZajecia(string nazwa, Zajecia zajecia)
 {
 	for (int i = 0; i < this->listaZajec.size(); i++)
@@ -30,6 +33,7 @@ void HarmonogramZajec::zmienZajecia(string nazwa, Zajecia zajecia)
 	}
 }
 
+// Wyœwietl wszystkie zajêcia z harmonogramu
 void HarmonogramZajec::przegladajHarmonogram()
 {
 
@@ -42,20 +46,24 @@ void HarmonogramZajec::przegladajHarmonogram()
 	cout << "=============================" << endl;
 }
 
+// Getter dla wektora z zajêciami w harmonogramie
 vector<Zajecia>& HarmonogramZajec::getListaZajec()
 {
 	return this->listaZajec;
 }
 
+// Konstruktor z parametrami
 HarmonogramZajec::HarmonogramZajec(vector<Zajecia> listaZajec)
 {
 	this->listaZajec = listaZajec;
 }
 
+// Konstruktor domyœlny
 HarmonogramZajec::HarmonogramZajec()
 {
 }
 
+// Destruktor
 HarmonogramZajec::~HarmonogramZajec()
 {
 }

@@ -14,7 +14,6 @@ class Zajecia
 	int czasTrwania;
 	int liczbaMiejsc;
 public:
-	void modyfikujZajecia();
 
 	Zajecia(string nazwa, string opis, time_t dataZajec, int czasTrwania, int liczbaMiejsc, string prowadzacy, vector<string> loginyUczestnikow);
 	Zajecia();
