@@ -222,7 +222,7 @@ int main() {
 				case '0':
 
 					// Menu klienta
-					cout << "==== Zalogowano jako " << login << " ====" << endl;
+					cout << "======= Zalogowano jako " << login << " =======" << endl;
 					cout << " 1) Wyswietl Karnet" << endl;
 					cout << " 2) Weryfikacja Karnetu" << endl;
 					cout << " 3) Przegladaj Cennik" << endl;
@@ -230,6 +230,12 @@ int main() {
 					cout << " 5) Przegladaj Zajecia" << endl;
 					cout << " 6) Usun Konto" << endl;
 					cout << "ESC) Wyloguj" << endl;
+					cout << "================================";
+					for (int i = 0; i < login.size(); i++)
+					{
+						cout << "=";
+					}
+					cout << endl;
 					wybor = _getch();
 					switch (wybor) {
 					case '1':
@@ -364,22 +370,22 @@ int main() {
 					case '4':
 					zajecia:
 						// Przegl¹danie zajêæ klienta
-						listaZajec = harmonogram.getListaZajec();
 						indeksyZajec.clear();
-						for (int i = 0; i < listaZajec.size(); i++)
+						for (int i = 0; i < harmonogram.getListaZajec().size(); i++)
 						{
-							for (int j = 0; j < listaZajec[i].getLoginyUczestnikow().size(); j++)
+							for (int j = 0; j < harmonogram.getListaZajec()[i].getLoginyUczestnikow().size(); j++)
 							{
-								if (login == listaZajec[i].getLoginyUczestnikow()[j])
+								if (login == harmonogram.getListaZajec()[i].getLoginyUczestnikow()[j])
 								{
 									indeksyZajec.push_back(i);
 								}
 							}
 						}
 						klient.setIndeksyZajec(indeksyZajec);
+						
 						do {
 							system("cls");
-							klient.getKontoUzytkownika().przegladajZajecia(klient.getIndeksyZajec(), listaZajec);
+							klient.getKontoUzytkownika().przegladajZajecia(klient.getIndeksyZajec(), harmonogram.getListaZajec());
 							cout << " 1) Usun rezerwacje" << endl;
 							cout << "ESC) Powrot" << endl;
 							wybor = _getch();
@@ -395,7 +401,7 @@ int main() {
 							{
 								system("cls");
 								cout << "Wybierz zajecia, z ktorych chcesz zrezygnowac" << endl;
-								klient.getKontoUzytkownika().przegladajZajecia(klient.getIndeksyZajec(), listaZajec);
+								klient.getKontoUzytkownika().przegladajZajecia(klient.getIndeksyZajec(), harmonogram.getListaZajec());
 								cout << "ESC) Powrot" << endl;
 								wybrany = _getch();
 							} while (wybrany != 27 && (!szukajWektor(klient.getIndeksyZajec(), wybrany -48)));
@@ -409,19 +415,19 @@ int main() {
 								do
 								{
 									system("cls");
-									cout << "Czy na pewno chcesz zrezygnowac z zajec " << listaZajec[wybrany -48].getNazwa() << "?" << endl;
+									cout << "Czy na pewno chcesz zrezygnowac z zajec " << harmonogram.getListaZajec()[wybrany -48].getNazwa() << "?" << endl;
 									cout << "T) TAK" << endl;
 									cout << "N) NIE" << endl;
 									wybor = _getch();
 								} while (wybor != 't' && wybor != 'T' && wybor != 'n' && wybor != 'N');
 								if (wybor == 't' || wybor == 'T')
 								{
-									for (int l = 0; l < listaZajec[wybrany - 48].getLoginyUczestnikow().size(); l++)
+									for (int l = 0; l < harmonogram.getListaZajec()[wybrany - 48].getLoginyUczestnikow().size(); l++)
 									{
-										if (listaZajec[wybrany - 48].getLoginyUczestnikow()[l] == login)
+										if (harmonogram.getListaZajec()[wybrany - 48].getLoginyUczestnikow()[l] == login)
 										{
 											// Usuniêcie klienta z listy uczestników zajêæ
-											listaZajec[wybrany - 48].getLoginyUczestnikow().erase(listaZajec[wybrany - 48].getLoginyUczestnikow().begin() + l);
+											harmonogram.getListaZajec()[wybrany - 48].getLoginyUczestnikow().erase(harmonogram.getListaZajec()[wybrany - 48].getLoginyUczestnikow().begin() + l);
 											for (int k = 0; k < klient.getIndeksyZajec().size(); k++)
 											{
 												if (klient.getIndeksyZajec()[k] == wybrany-48)
@@ -434,11 +440,11 @@ int main() {
 											plikAktualizuj.open("src/ListaZajec.txt", ios::out);
 											for (int i = 0; i < listaZajec.size(); i++)
 											{
-												plikAktualizuj << listaZajec[i].getNazwa() << "\t" << spacjeNaPodlogi(listaZajec[i].getOpis()) << "\t" << listaZajec[i].getDataZajec() << "\t" <<
-													listaZajec[i].getCzasTrwania() << "\t" << listaZajec[i].getLiczbaMiejsc() << "\t" << listaZajec[i].getProwadzacy() << "\t";
+												plikAktualizuj << harmonogram.getListaZajec()[i].getNazwa() << "\t" << spacjeNaPodlogi(harmonogram.getListaZajec()[i].getOpis()) << "\t" << harmonogram.getListaZajec()[i].getDataZajec() << "\t" <<
+													harmonogram.getListaZajec()[i].getCzasTrwania() << "\t" << harmonogram.getListaZajec()[i].getLiczbaMiejsc() << "\t" << harmonogram.getListaZajec()[i].getProwadzacy() << "\t";
 												for (int j = 0; j < listaZajec[i].getLoginyUczestnikow().size(); j++)
 												{
-													plikAktualizuj << listaZajec[i].getLoginyUczestnikow()[j] << "\t";
+													plikAktualizuj << harmonogram.getListaZajec()[i].getLoginyUczestnikow()[j] << "\t";
 												}
 												plikAktualizuj << endl;
 											}
@@ -586,11 +592,17 @@ int main() {
 					break;
 				case '1':
 					// Konto pracownika
-					cout << "==== Zalogowano jako " << login << " ====" << endl;
+					cout << "======= Zalogowano jako " << login << " =======" << endl;
 					cout << " 1) Zarzadzanie Cennikiem" << endl;
 					cout << " 2) Zarzadzanie Kontami" << endl;
 					cout << " 3) Zarzadzanie Harmonogramem Zajec" << endl;
 					cout << "ESC) Wyloguj" << endl;
+					cout << "================================";
+					for (int i = 0; i < login.size(); i++)
+					{
+						cout << "=";
+					}
+					cout << endl;
 					wybor = _getch();
 					switch (wybor) {
 					case '1':

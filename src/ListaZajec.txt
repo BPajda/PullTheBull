@@ -1,4 +1,4 @@
-Pilates	rozciaganie_i_uelastycznienie_ciala	1704589934	45	10	Julia	
-Fitness	poprawa_gibkosci_i_elastycznosci_ciala	1704981600	45	15	Janusz	blabla	jacus	placus	bpajda	jzboro	
-Zumba	taneczny_trening_dla_kazdego	1704874500	30	10	Katarzyna	bpajda	
+Pilates	rozciaganie_i_uelastycznienie_ciala	1704589934	45	10	Julia	bpajda	
+Fitness	poprawa_gibkosci_i_elastycznosci_ciala	1704981600	45	15	Janusz	blabla	jacus	placus	jzboro	bpajda	
+Zumba	taneczny_trening_dla_kazdego	1704874500	30	10	Katarzyna	
 Crossfit	wygibasy_cuda_na_kiju	1728547800	30	15	Monika	
