@@ -222,7 +222,7 @@ int main() {
 				case '0':
 
 					// Menu klienta
-					cout << "==== Zalogowano jako " << login << " ====" << endl;
+					cout << "======= Zalogowano jako " << login << " =======" << endl;
 					cout << " 1) Wyswietl Karnet" << endl;
 					cout << " 2) Weryfikacja Karnetu" << endl;
 					cout << " 3) Przegladaj Cennik" << endl;
@@ -230,6 +230,12 @@ int main() {
 					cout << " 5) Przegladaj Zajecia" << endl;
 					cout << " 6) Usun Konto" << endl;
 					cout << "ESC) Wyloguj" << endl;
+					cout << "================================";
+					for (int i = 0; i < login.size(); i++)
+					{
+						cout << "=";
+					}
+					cout << endl;
 					wybor = _getch();
 					switch (wybor) {
 					case '1':
@@ -586,11 +592,17 @@ int main() {
 					break;
 				case '1':
 					// Konto pracownika
-					cout << "==== Zalogowano jako " << login << " ====" << endl;
+					cout << "======= Zalogowano jako " << login << " =======" << endl;
 					cout << " 1) Zarzadzanie Cennikiem" << endl;
 					cout << " 2) Zarzadzanie Kontami" << endl;
 					cout << " 3) Zarzadzanie Harmonogramem Zajec" << endl;
 					cout << "ESC) Wyloguj" << endl;
+					cout << "================================";
+					for (int i = 0; i < login.size(); i++)
+					{
+						cout << "=";
+					}
+					cout << endl;
 					wybor = _getch();
 					switch (wybor) {
 					case '1':
