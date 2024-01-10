@@ -28,6 +28,10 @@ namespace GymAppTests
 
 			Assert::IsTrue(karnet1.sprawdzWaznosc());
 
+			karnet1.ostatniaPlatnosc = 3592000;
+			Assert::IsFalse(karnet1.sprawdzWaznosc());
+
+
 		}
 		TEST_METHOD(oplacKarnet)
 		{
@@ -41,11 +45,34 @@ namespace GymAppTests
 		TEST_METHOD(KarnetConstr)
 		{
 			Karnet karnet3;
-			karnet3.ostatniaPlatnosc = time(0);
-			time_t czas = 0;
+			TypKarnetu typkarnetu1;
+			time_t czas = time(0);
+			karnet3 = Karnet(czas, typkarnetu1);
 			
 			Assert::AreEqual(karnet3.ostatniaPlatnosc, czas);
+			Assert::AreEqual(karnet3.typkarnetu.nazwa, typkarnetu1.nazwa);
+			Assert::AreEqual(karnet3.typkarnetu.cena, typkarnetu1.cena);
+			Assert::AreEqual(karnet3.typkarnetu.open, typkarnetu1.open);
+			Assert::AreEqual(karnet3.typkarnetu.zajecia, typkarnetu1.zajecia);
 
+		}
+		TEST_METHOD(getTypKarnetu)
+		{
+			Karnet karnet4;
+			TypKarnetu typKarnetu4;
+			karnet4.typkarnetu = typKarnetu4;
+
+			Assert::AreEqual(karnet4.typkarnetu.nazwa, karnet4.getTypKarnetu().nazwa);
+			Assert::AreEqual(karnet4.typkarnetu.cena, karnet4.getTypKarnetu().cena);
+			Assert::AreEqual(karnet4.typkarnetu.open, karnet4.getTypKarnetu().open);
+			Assert::AreEqual(karnet4.typkarnetu.zajecia, karnet4.getTypKarnetu().zajecia);
+		}
+		TEST_METHOD(getOstatniaPlatnosc)
+		{
+			Karnet karnet5;
+			karnet5.ostatniaPlatnosc = time(0);
+
+			Assert::AreEqual(karnet5.ostatniaPlatnosc, karnet5.getOstatniaPlatnosc());
 		}
 
 	};
